@@ -1,0 +1,441 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
+		A356C0591B288DAA005B9DFB /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
+		A356C05B1B288DAA005B9DFB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C05A1B288DAA005B9DFB /* ViewController.swift */; };
+		A356C05E1B288DAA005B9DFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A356C05C1B288DAA005B9DFB /* Main.storyboard */; };
+		A356C0601B288DAA005B9DFB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A356C05F1B288DAA005B9DFB /* Images.xcassets */; };
+		A356C0631B288DAA005B9DFB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A356C0611B288DAA005B9DFB /* LaunchScreen.xib */; };
+		A356C06F1B288DAA005B9DFB /* iGordonSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C06E1B288DAA005B9DFB /* iGordonSwiftTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A356C0691B288DAA005B9DFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A356C0481B288DAA005B9DFB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A356C04F1B288DAA005B9DFB;
+			remoteInfo = iGordonSwift;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A356C0501B288DAA005B9DFB /* iGordonSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGordonSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A356C0541B288DAA005B9DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A356C0551B288DAA005B9DFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A356C0581B288DAA005B9DFB /* iGordonSwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iGordonSwift.xcdatamodel; sourceTree = "<group>"; };
+		A356C05A1B288DAA005B9DFB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A356C05D1B288DAA005B9DFB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A356C05F1B288DAA005B9DFB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A356C0621B288DAA005B9DFB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		A356C0681B288DAA005B9DFB /* iGordonSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iGordonSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A356C06D1B288DAA005B9DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A356C06E1B288DAA005B9DFB /* iGordonSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iGordonSwiftTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A356C04D1B288DAA005B9DFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A356C0651B288DAA005B9DFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A356C0471B288DAA005B9DFB = {
+			isa = PBXGroup;
+			children = (
+				A356C0521B288DAA005B9DFB /* iGordonSwift */,
+				A356C06B1B288DAA005B9DFB /* iGordonSwiftTests */,
+				A356C0511B288DAA005B9DFB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A356C0511B288DAA005B9DFB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A356C0501B288DAA005B9DFB /* iGordonSwift.app */,
+				A356C0681B288DAA005B9DFB /* iGordonSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A356C0521B288DAA005B9DFB /* iGordonSwift */ = {
+			isa = PBXGroup;
+			children = (
+				A356C0551B288DAA005B9DFB /* AppDelegate.swift */,
+				A356C05A1B288DAA005B9DFB /* ViewController.swift */,
+				A356C05C1B288DAA005B9DFB /* Main.storyboard */,
+				A356C05F1B288DAA005B9DFB /* Images.xcassets */,
+				A356C0611B288DAA005B9DFB /* LaunchScreen.xib */,
+				A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */,
+				A356C0531B288DAA005B9DFB /* Supporting Files */,
+			);
+			path = iGordonSwift;
+			sourceTree = "<group>";
+		};
+		A356C0531B288DAA005B9DFB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A356C0541B288DAA005B9DFB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A356C06B1B288DAA005B9DFB /* iGordonSwiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				A356C06E1B288DAA005B9DFB /* iGordonSwiftTests.swift */,
+				A356C06C1B288DAA005B9DFB /* Supporting Files */,
+			);
+			path = iGordonSwiftTests;
+			sourceTree = "<group>";
+		};
+		A356C06C1B288DAA005B9DFB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A356C06D1B288DAA005B9DFB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A356C04F1B288DAA005B9DFB /* iGordonSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A356C0721B288DAA005B9DFB /* Build configuration list for PBXNativeTarget "iGordonSwift" */;
+			buildPhases = (
+				A356C04C1B288DAA005B9DFB /* Sources */,
+				A356C04D1B288DAA005B9DFB /* Frameworks */,
+				A356C04E1B288DAA005B9DFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iGordonSwift;
+			productName = iGordonSwift;
+			productReference = A356C0501B288DAA005B9DFB /* iGordonSwift.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A356C0671B288DAA005B9DFB /* iGordonSwiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A356C0751B288DAA005B9DFB /* Build configuration list for PBXNativeTarget "iGordonSwiftTests" */;
+			buildPhases = (
+				A356C0641B288DAA005B9DFB /* Sources */,
+				A356C0651B288DAA005B9DFB /* Frameworks */,
+				A356C0661B288DAA005B9DFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A356C06A1B288DAA005B9DFB /* PBXTargetDependency */,
+			);
+			name = iGordonSwiftTests;
+			productName = iGordonSwiftTests;
+			productReference = A356C0681B288DAA005B9DFB /* iGordonSwiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A356C0481B288DAA005B9DFB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Gordon College";
+				TargetAttributes = {
+					A356C04F1B288DAA005B9DFB = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					A356C0671B288DAA005B9DFB = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = A356C04F1B288DAA005B9DFB;
+					};
+				};
+			};
+			buildConfigurationList = A356C04B1B288DAA005B9DFB /* Build configuration list for PBXProject "iGordonSwift" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A356C0471B288DAA005B9DFB;
+			productRefGroup = A356C0511B288DAA005B9DFB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A356C04F1B288DAA005B9DFB /* iGordonSwift */,
+				A356C0671B288DAA005B9DFB /* iGordonSwiftTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A356C04E1B288DAA005B9DFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A356C05E1B288DAA005B9DFB /* Main.storyboard in Resources */,
+				A356C0631B288DAA005B9DFB /* LaunchScreen.xib in Resources */,
+				A356C0601B288DAA005B9DFB /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A356C0661B288DAA005B9DFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A356C04C1B288DAA005B9DFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A356C05B1B288DAA005B9DFB /* ViewController.swift in Sources */,
+				A356C0591B288DAA005B9DFB /* iGordonSwift.xcdatamodeld in Sources */,
+				A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A356C0641B288DAA005B9DFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A356C06F1B288DAA005B9DFB /* iGordonSwiftTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A356C06A1B288DAA005B9DFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A356C04F1B288DAA005B9DFB /* iGordonSwift */;
+			targetProxy = A356C0691B288DAA005B9DFB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A356C05C1B288DAA005B9DFB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A356C05D1B288DAA005B9DFB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A356C0611B288DAA005B9DFB /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A356C0621B288DAA005B9DFB /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A356C0701B288DAA005B9DFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A356C0711B288DAA005B9DFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A356C0731B288DAA005B9DFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = iGordonSwift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A356C0741B288DAA005B9DFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = iGordonSwift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A356C0761B288DAA005B9DFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = iGordonSwiftTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGordonSwift.app/iGordonSwift";
+			};
+			name = Debug;
+		};
+		A356C0771B288DAA005B9DFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = iGordonSwiftTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGordonSwift.app/iGordonSwift";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A356C04B1B288DAA005B9DFB /* Build configuration list for PBXProject "iGordonSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A356C0701B288DAA005B9DFB /* Debug */,
+				A356C0711B288DAA005B9DFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A356C0721B288DAA005B9DFB /* Build configuration list for PBXNativeTarget "iGordonSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A356C0731B288DAA005B9DFB /* Debug */,
+				A356C0741B288DAA005B9DFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A356C0751B288DAA005B9DFB /* Build configuration list for PBXNativeTarget "iGordonSwiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A356C0761B288DAA005B9DFB /* Debug */,
+				A356C0771B288DAA005B9DFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A356C0581B288DAA005B9DFB /* iGordonSwift.xcdatamodel */,
+			);
+			currentVersion = A356C0581B288DAA005B9DFB /* iGordonSwift.xcdatamodel */;
+			path = iGordonSwift.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A356C0481B288DAA005B9DFB /* Project object */;
+}
