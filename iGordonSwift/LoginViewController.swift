@@ -8,15 +8,23 @@
 import Foundation
 import UIKit
 
+
 class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
 
-    var session: NSURLSession?;
+    
     var responseData: NSMutableData  = NSMutableData();
-    var userGordoName: String? , userGordonPassword: String?;
+    
+    var userGordoName: String? ,
+        userGordonPassword: String?;
+    
     var httpResponseFromServer: Int?;
     var mainDataViewController: MainDataViewController = MainDataViewController();
     
+    
+    @IBOutlet weak var imgLogoiGordon: UIImageView!
+    
     @IBOutlet weak var txtUserName: UITextField!
+    
     
     @IBOutlet weak var txtPassword: UITextField!
     
@@ -24,18 +32,17 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     @IBOutlet weak var lblEnterCredentials: UILabel!
     
     
-    
     @IBAction func btnLogin(sender: UIButton) {
         
         userGordoName = txtUserName.text ;
         
         
-        userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
-        
+       // userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        userGordonPassword = txtPassword.text ;
      
-        self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
+        //self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
         
-        //performLoginAtServer();
+        performLoginAtServer();
         
     }
     
@@ -54,16 +61,17 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     
     func performLoginAtServer(){
-        
-        var requestString = "http://api.adamvig.com/gocostudent/2.2/checklogin?username=";
-        
-        requestString = requestString.stringByAppendingFormat("@%@%@", userGordoName!, "&password=", userGordonPassword!);
-        
-        var request: NSURLRequest = NSURLRequest(URL: NSURL(string: requestString)!);
-        
-        var conn: NSURLConnection = NSURLConnection(request: request, delegate: self)!;
-        
-        
+
+        let loginString: String = "iGordon:swift"
+        let urlstring: String = "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits"
+        let url = NSURL(string: urlstring);
+        let request = NSMutableURLRequest(URL: url!);
+        request.HTTPMethod = "GET" ;
+        request.addValue("Basic \(loginString)", forHTTPHeaderField: "Authorization:");
+        let urlConnection = NSURLConnection(request: request, delegate: self);
+
+      
+
     }
     
     
@@ -85,8 +93,13 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
     func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
+        
         let httpResponse = response as? NSHTTPURLResponse
         httpResponseFromServer = httpResponse!.statusCode
+        println(httpResponseFromServer)
+        println("####################")
+        println(response)
+        
     }
     
     func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
@@ -122,15 +135,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
 
     
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 
   

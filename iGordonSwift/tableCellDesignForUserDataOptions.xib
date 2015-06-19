@@ -6,30 +6,30 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCellDesignUserDataOptions" rowHeight="103" id="kDY-Sa-FqV" customClass="TableViewCellUserDataCustom" customModule="iGordonSwift" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCellDesignUserDataOptions" rowHeight="85" id="kDY-Sa-FqV" customClass="TableViewCellUserDataCustom" customModule="iGordonSwift" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="400" height="121"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kDY-Sa-FqV" id="V3r-Ig-p35">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Elf-Oa-tuo">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="89"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQ2-xH-mJL">
-                        <rect key="frame" x="108" y="0.0" width="138" height="60"/>
+                        <rect key="frame" x="131" y="34" width="138" height="50"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="20"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-kt-peu">
-                        <rect key="frame" x="260" y="35" width="20" height="20"/>
+                        <rect key="frame" x="346" y="48" width="20" height="20"/>
                     </activityIndicatorView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Result" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJK-nJ-mTX">
-                        <rect key="frame" x="300" y="0.0" width="92" height="71"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                        <rect key="frame" x="277" y="34" width="37" height="48"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="11"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Elf-Oa-tuo">
+                        <rect key="frame" x="0.0" y="18" width="100" height="80"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -38,7 +38,7 @@
                 <outlet property="lblDescriptionOfEndPoint" destination="cQ2-xH-mJL" id="DTD-Pj-ARO"/>
                 <outlet property="lblResultFromServer" destination="iJK-nJ-mTX" id="k2u-v3-WBN"/>
             </connections>
-            <point key="canvasLocation" x="654" y="128.5"/>
+            <point key="canvasLocation" x="314" y="173.5"/>
         </tableViewCell>
     </objects>
 </document>

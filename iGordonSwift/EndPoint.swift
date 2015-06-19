@@ -13,13 +13,19 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     
     
     
-    var name: String = "", cellDescription: String = "", value : String = "", image: String = "" ;
+    var name: String = "",
+        cellDescription: String = "",
+        value : String = "",
+        image: String = "" ;
+    
     
     var colorRGB: [CGFloat] = [0, 0 ,0];
+    
     var responseData: NSMutableData  = NSMutableData();
     
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         responseData .appendData(data);
+        
     }
     func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
         return nil;
@@ -27,30 +33,28 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     
     func connectionDidFinishLoading(connection: NSURLConnection) {
         
-       
-        let jsonObjectFromServer: AnyObject? =
+        
+        let jsonObjectFromServer: AnyObject! =
         NSJSONSerialization.JSONObjectWithData(
             responseData,
-            options: nil,
+            options: NSJSONReadingOptions(0),
             error:  nil)
         
-       
+
         
-        if let json = jsonObjectFromServer as? Dictionary<String, AnyObject> {
+        if let json = jsonObjectFromServer as? Dictionary<String, AnyObject>{
             
             if let id = json["data"] as AnyObject? as? String {
-                
                 value = id ;
-                
-
                 NSNotificationCenter.defaultCenter().postNotificationName("dataRetrievedFromServer",
-                                                            object: self, userInfo: [name: value]);
-                
+                                                           object: self, userInfo: [name: value]);
             }
-        
-        }else{
-            println("Error while parsing the data") ;
         }
+        else{
+          println("Error while parsing the data") ;
+        }
+
+        
         
     }
     
@@ -70,9 +74,18 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
         
         */
         
-        value = "TEST"+name ;
-        NSNotificationCenter.defaultCenter().postNotificationName("dataRetrievedFromServer",
-            object: self, userInfo: [name: value]);
+        let username = "iGordon", password = "swift" ;
+        let loginString = NSString(format: "%@:%@",username,password);
+
+        let url = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/"+name);
+        let request = NSMutableURLRequest(URL: url!);
+        request.HTTPMethod = "GET" ;
+        request.setValue("Basic \(loginString)", forHTTPHeaderField: "Authorization");
+        
+        
+        println(request);
+        let urlConnection = NSURLConnection(request: request, delegate: self);
+        
         
     }
     

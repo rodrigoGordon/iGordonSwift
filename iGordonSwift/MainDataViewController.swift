@@ -105,13 +105,11 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
         
         self.navigationController?.navigationBar.hidden = false;
+        
         //used to make the table get closer to the navigation bar
         self.automaticallyAdjustsScrollViewInsets = false;
-       
-        tableViewData?.estimatedRowHeight = 88.0 ;
-        tableViewData?.rowHeight = UITableViewAutomaticDimension ;
-      
-        
+        tableViewData.estimatedRowHeight = 80;
+        tableViewData.rowHeight = UITableViewAutomaticDimension;
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -122,12 +120,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     func updateSpecificRowWithNotification(notification: NSNotification)
     {
-    
-       
-        let keyOfEndPointToBeUpdated = notification.userInfo!.keys.first
-
         
-        var indexPath = NSIndexPath(forRow: find(userTablePreferences, (keyOfEndPointToBeUpdated as? String)!)!, inSection: 0);
+       
+        let keyOfEndPointToBeUpdated = notification.userInfo!.keys.first;
+        
+        var indexPath = NSIndexPath(forRow: find(userTablePreferences,
+                                            (keyOfEndPointToBeUpdated as? String)!)!, inSection: 0);
     
 
         tableViewData?.beginUpdates();
@@ -156,18 +154,14 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     func updateTableAfterChangesAtUserPreferences(notification: NSNotification){
     
+        
+        let tempParseFromNotification: Dictionary<String,[String]> =
+            (notification.userInfo as? Dictionary<String,[String]>)!;
+        
 
-        
-        let tempParseFromNotification: Dictionary<String,[String]> = (notification.userInfo as? Dictionary<String,[String]>)!;
-        
-        
-        
         let tempUserPreferencesChanges: [String] = tempParseFromNotification["userPreferences"]! ;
         
         var copyOfUserTablePreferences = userTablePreferences;
-        
-        
-        
         
         
         for obj in tempUserPreferencesChanges {
@@ -228,6 +222,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
         let identifier = "tableCellDesignUserDataOptions";
+        // IT"S mandatory to register a NIB
         tableView.registerNib(UINib(nibName: "tableCellDesignForUserDataOptions", bundle: nil), forCellReuseIdentifier: identifier);
         
         var cell: TableViewCellUserDataCustom = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TableViewCellUserDataCustom;

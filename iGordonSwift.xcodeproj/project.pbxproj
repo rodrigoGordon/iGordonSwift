@@ -30,6 +30,7 @@
 		A356C09E1B2BE777005B9DFB /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = A356C0941B2BE777005B9DFB /* person.png */; };
 		A356C09F1B2BE777005B9DFB /* silverware.png in Resources */ = {isa = PBXBuildFile; fileRef = A356C0951B2BE777005B9DFB /* silverware.png */; };
 		A356C0A01B2BE777005B9DFB /* thermometer.png in Resources */ = {isa = PBXBuildFile; fileRef = A356C0961B2BE777005B9DFB /* thermometer.png */; };
+		A3A0B67C1B3351970036BE44 /* btnLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = A3A0B67B1B3351970036BE44 /* btnLogin.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		A356C0941B2BE777005B9DFB /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		A356C0951B2BE777005B9DFB /* silverware.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = silverware.png; sourceTree = "<group>"; };
 		A356C0961B2BE777005B9DFB /* thermometer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thermometer.png; sourceTree = "<group>"; };
+		A3A0B67B1B3351970036BE44 /* btnLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnLogin.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				A356C08D1B2BE777005B9DFB /* calculator.png */,
+				A3A0B67B1B3351970036BE44 /* btnLogin.png */,
 				A356C08E1B2BE777005B9DFB /* calendar.png */,
 				A356C08F1B2BE777005B9DFB /* chapel.png */,
 				A356C0901B2BE777005B9DFB /* listIcon.png */,
@@ -283,6 +286,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A0B67C1B3351970036BE44 /* btnLogin.png in Resources */,
 				A356C09E1B2BE777005B9DFB /* person.png in Resources */,
 				A356C09D1B2BE777005B9DFB /* LogoIcon@2x.png in Resources */,
 				A356C0851B28CE64005B9DFB /* tableCellDesignForUserDataOptions.xib in Resources */,
@@ -451,6 +455,7 @@
 				INFOPLIST_FILE = iGordonSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -461,6 +466,7 @@
 				INFOPLIST_FILE = iGordonSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -517,6 +523,7 @@
 				A356C0741B288DAA005B9DFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A356C0751B288DAA005B9DFB /* Build configuration list for PBXNativeTarget "iGordonSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +532,7 @@
 				A356C0771B288DAA005B9DFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
