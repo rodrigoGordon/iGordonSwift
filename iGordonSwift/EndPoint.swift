@@ -65,8 +65,7 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
         
         requestString = requestString.stringByAppendingFormat("%@%@%@%@%@", name, "?username=", userProfile["username"]! ,
             "&password=" , userProfile["password"]!);
-        
-        
+    
         
         var request: NSURLRequest = NSURLRequest(URL: NSURL(string: requestString)!);
         
@@ -75,15 +74,9 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
         */
         
         let username = "iGordon", password = "swift" ;
-        let loginString = NSString(format: "%@:%@",username,password);
-
-        let url = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/"+name);
+        let url = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/"+name+"?username=iGordon&password=swift");
         let request = NSMutableURLRequest(URL: url!);
         request.HTTPMethod = "GET" ;
-        request.setValue("Basic \(loginString)", forHTTPHeaderField: "Authorization");
-        
-        
-        println(request);
         let urlConnection = NSURLConnection(request: request, delegate: self);
         
         

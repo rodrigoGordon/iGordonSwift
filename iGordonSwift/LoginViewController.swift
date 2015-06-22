@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 
+
 class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
 
     
@@ -62,15 +63,12 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     func performLoginAtServer(){
 
-        let loginString: String = "iGordon:swift"
-        let urlstring: String = "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits"
-        let url = NSURL(string: urlstring);
+        let username = "iGordon", password = "swift" ;
+        let url = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift");
         let request = NSMutableURLRequest(URL: url!);
         request.HTTPMethod = "GET" ;
-        request.addValue("Basic \(loginString)", forHTTPHeaderField: "Authorization:");
         let urlConnection = NSURLConnection(request: request, delegate: self);
-
-      
+        
 
     }
     
@@ -96,9 +94,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         let httpResponse = response as? NSHTTPURLResponse
         httpResponseFromServer = httpResponse!.statusCode
-        println(httpResponseFromServer)
-        println("####################")
-        println(response)
         
     }
     
@@ -110,7 +105,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         if(httpResponseFromServer == 200 ){
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
-            println("Login Succeeded");
         }else{
             returnsErrorMessageBadLogin();
         }

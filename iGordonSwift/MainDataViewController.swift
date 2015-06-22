@@ -108,8 +108,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         //used to make the table get closer to the navigation bar
         self.automaticallyAdjustsScrollViewInsets = false;
-        tableViewData.estimatedRowHeight = 80;
-        tableViewData.rowHeight = UITableViewAutomaticDimension;
+
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -288,7 +289,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath
         indexPath: NSIndexPath) -> CGFloat {
-            return 100;
+            return (tableView.frame.size.height / CGFloat(userTablePreferences.count))-10;
     }
     
 
