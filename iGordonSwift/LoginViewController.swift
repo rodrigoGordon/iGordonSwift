@@ -10,81 +10,156 @@ import UIKit
 
 
 
-class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
+class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UITextFieldDelegate, UITextViewDelegate {
 
     
     var responseData: NSMutableData  = NSMutableData();
     
-    var userGordoName: String? ,
+    var userGordonName: String? ,
         userGordonPassword: String?;
     
     var httpResponseFromServer: Int?;
     var mainDataViewController: MainDataViewController = MainDataViewController();
-    
+    var keyBoardHeight: CGFloat!;
+    var viewAdjusted: Bool = false ;
     
     @IBOutlet weak var imgLogoiGordon: UIImageView!
     
     @IBOutlet weak var txtUserName: UITextField!
     
-    
     @IBOutlet weak var txtPassword: UITextField!
-    
     
     @IBOutlet weak var lblEnterCredentials: UILabel!
     
-    
     @IBAction func btnLogin(sender: UIButton) {
         
-        userGordoName = txtUserName.text ;
+        userGordonName = txtUserName.text ;
         
-        
-       // userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
-        userGordonPassword = txtPassword.text ;
-     
-        //self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
-        
+        userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+
         performLoginAtServer();
+        txtPassword.resignFirstResponder();
+        activityLogin.hidden = false
+        activityLogin.startAnimating()
+        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+            userInfo: nil, repeats: false)
         
+    }
+    
+    @IBOutlet weak var activityLogin: UIActivityIndicatorView!
+    
+    override func viewDidLoad() {
+        txtUserName.delegate = self
+        txtPassword.delegate = self
+        
+        
+        
+    }
+    
+    //function used to move the txtFields when the key board appears
+    func animateTextField(up: Bool){
+        var movement = (up ? -keyBoardHeight : keyBoardHeight)
+        if !viewAdjusted{
+        UIView.animateWithDuration(0.3, animations: {
+                self.view.frame = CGRectOffset(self.view.frame, 0, movement/2) //move screen up or down by half of the height if the keyboard
+                self.viewAdjusted = up
+        })
+        }
+    }
+    
+  
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func keyboardWillShow(notification: NSNotification){
+        if let userInfo = notification.userInfo{
+            if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
+                keyBoardHeight = keyboardSize.height
+                self.animateTextField(true)
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification){
+        self.animateTextField(false)
     }
     
     
     @IBAction func logoutFromPopover(segue: UIStoryboardSegue) {
-
+        
+        txtUserName.text = "";
+        txtPassword.text = "";
+        viewAdjusted = false;
+        lblEnterCredentials.text = "Enter your credentials for GoGordon";
+        lblEnterCredentials.textColor = UIColor.whiteColor();
     
-    if !segue.sourceViewController.isBeingDismissed() {
-       segue.sourceViewController.dismissViewControllerAnimated(true, completion: nil) ;
+    
+        if !segue.sourceViewController.isBeingDismissed() {
+       
+        segue.sourceViewController.dismissViewControllerAnimated(true, completion: nil) ;
+            
+        }
+    
+    
     }
     
-    
+    //used for tab between the txtFields and Done button
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == txtUserName{
+            txtPassword.becomeFirstResponder()
+        }else if textField == txtPassword{
+            txtPassword.resignFirstResponder()
+            viewAdjusted = false
+            animateTextField(false)
+        }
+        return true
     }
     
-
     
     
     func performLoginAtServer(){
 
-        let username = "iGordon", password = "swift" ;
+       
+        
+        //url used to connect to Goco Server
+        let urlString = "http://api.adamvig.com/gocostudent/2.2/checklogin?username=\(userGordonName!)&password=\(userGordonPassword!)"
+        
+        
+        let urlGoco: NSURL = NSURL(string: urlString)!;
+        
+        
+        //url used to connect to the debug server
         let url = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift");
-        let request = NSMutableURLRequest(URL: url!);
+        
+        let request = NSMutableURLRequest(URL: urlGoco);
+        
+        
         request.HTTPMethod = "GET" ;
         let urlConnection = NSURLConnection(request: request, delegate: self);
-        
+
 
     }
+
     
-    
-    
-    
-    override func viewWillAppear(animated: Bool) {
+     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        activityLogin.hidden = true
         self.navigationController?.navigationBar.hidden = true;
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"),
+                                                         name:UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"),
+                                                         name:UIKeyboardWillHideNotification, object: nil)
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         responseData .appendData(data);
@@ -94,6 +169,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         let httpResponse = response as? NSHTTPURLResponse
         httpResponseFromServer = httpResponse!.statusCode
+        
         
     }
     
@@ -111,13 +187,12 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
 
         
     }
-    
-    
-    
+
     
     func returnsErrorMessageBadLogin(){
     
-
+        activityLogin.hidden = true
+        activityLogin.stopAnimating()
     
         dispatch_async(dispatch_get_main_queue(), {
             //compiler requires to use self.label here
@@ -126,7 +201,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
             self.lblEnterCredentials.text = "Incorrect credentials"
         });
         
-
+        
     
     }
     
@@ -138,7 +213,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         mainDataViewController = segue.destinationViewController as! MainDataViewController;
 
-        mainDataViewController.userProfile = ["username":userGordoName, "password":userGordonPassword]
+        mainDataViewController.userProfile = ["username":userGordonName, "password":userGordonPassword]
                                              as Dictionary<String,String?>  ;
         
         

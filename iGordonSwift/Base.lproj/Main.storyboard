@@ -17,27 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBq-ti-HQB">
-                                <rect key="frame" x="250" y="454" width="100" height="30"/>
-                                <state key="normal" title="All done!" backgroundImage="btnLogin.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="btnLogin:" destination="V1F-ng-XEv" eventType="touchUpInside" id="EJk-wm-IPP"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gYG-it-7cS">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gYG-it-7cS">
                                 <rect key="frame" x="225" y="357" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="ice-fA-1VP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="firstname.lastname" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-jT-ZTM">
                                 <rect key="frame" x="225" y="306" width="150" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your credentials for GoGordon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pY4-bS-TYK">
                                 <rect key="frame" x="161" y="265" width="278" height="21"/>
@@ -56,24 +47,39 @@
                                     <constraint firstAttribute="width" constant="166" id="u9E-A6-hwK"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="B0O-Nj-L7t">
+                                <rect key="frame" x="363" y="412" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBq-ti-HQB">
+                                <rect key="frame" x="250" y="407" width="100" height="30"/>
+                                <state key="normal" title="All done!" backgroundImage="btnLogin.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnLogin:" destination="V1F-ng-XEv" eventType="touchUpInside" id="EJk-wm-IPP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.28526407949999999" blue="0.49019491790000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="lBq-ti-HQB" secondAttribute="centerX" id="4eI-o5-amm"/>
                             <constraint firstItem="hZM-jT-ZTM" firstAttribute="leading" secondItem="gYG-it-7cS" secondAttribute="leading" id="BeX-pQ-aNz"/>
-                            <constraint firstItem="lBq-ti-HQB" firstAttribute="top" secondItem="gYG-it-7cS" secondAttribute="bottom" constant="67" id="H4y-3y-NZ0"/>
+                            <constraint firstItem="lBq-ti-HQB" firstAttribute="top" secondItem="gYG-it-7cS" secondAttribute="bottom" constant="20" id="H4y-3y-NZ0"/>
                             <constraint firstItem="hZM-jT-ZTM" firstAttribute="top" secondItem="pY4-bS-TYK" secondAttribute="bottom" constant="20" id="J2S-Kl-60T"/>
                             <constraint firstItem="pY4-bS-TYK" firstAttribute="top" secondItem="Cyy-xu-mvx" secondAttribute="bottom" constant="16" id="K8b-Vv-nrP"/>
                             <constraint firstItem="hZM-jT-ZTM" firstAttribute="trailing" secondItem="gYG-it-7cS" secondAttribute="trailing" id="Nvo-y7-gI6"/>
                             <constraint firstItem="gYG-it-7cS" firstAttribute="top" secondItem="hZM-jT-ZTM" secondAttribute="bottom" constant="21" id="Rew-dY-3iX"/>
                             <constraint firstItem="Cyy-xu-mvx" firstAttribute="centerX" secondItem="pY4-bS-TYK" secondAttribute="centerX" id="VyC-yg-kzy"/>
-                            <constraint firstAttribute="centerY" secondItem="lBq-ti-HQB" secondAttribute="centerY" constant="-169" id="h1h-zf-8yc"/>
+                            <constraint firstAttribute="centerY" secondItem="lBq-ti-HQB" secondAttribute="centerY" constant="-122" id="h1h-zf-8yc"/>
                             <constraint firstItem="gYG-it-7cS" firstAttribute="centerX" secondItem="lBq-ti-HQB" secondAttribute="centerX" id="mQG-qg-R94"/>
+                            <constraint firstItem="B0O-Nj-L7t" firstAttribute="trailing" secondItem="Cyy-xu-mvx" secondAttribute="trailing" id="rrD-FL-usF"/>
                             <constraint firstItem="pY4-bS-TYK" firstAttribute="centerX" secondItem="hZM-jT-ZTM" secondAttribute="centerX" id="tBY-Pc-5ka"/>
+                            <constraint firstItem="B0O-Nj-L7t" firstAttribute="centerY" secondItem="lBq-ti-HQB" secondAttribute="centerY" id="vlq-kv-Af7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ph2-uP-Akm"/>
                     <connections>
+                        <outlet property="activityLogin" destination="B0O-Nj-L7t" id="YPb-fc-KZx"/>
                         <outlet property="imgLogoiGordon" destination="Cyy-xu-mvx" id="y3d-Rb-ch0"/>
                         <outlet property="lblEnterCredentials" destination="pY4-bS-TYK" id="avH-J7-KhR"/>
                         <outlet property="txtPassword" destination="gYG-it-7cS" id="SCR-CK-1WE"/>

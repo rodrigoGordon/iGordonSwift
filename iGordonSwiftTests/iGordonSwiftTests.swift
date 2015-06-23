@@ -8,11 +8,16 @@
 
 import UIKit
 import XCTest
+import Foundation
 
 class iGordonSwiftTests: XCTestCase {
     
+    
+   
+    
     override func setUp() {
         super.setUp()
+        
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -22,6 +27,9 @@ class iGordonSwiftTests: XCTestCase {
     }
     
     func testExample() {
+        
+        //let test = EndPoint()
+        
         // This is an example of a functional test case.
         XCTAssert(true, "Pass")
     }

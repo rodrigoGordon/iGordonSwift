@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B4E259F1B39F373009D7477 /* iGordonSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C06E1B288DAA005B9DFB /* iGordonSwiftTests.swift */; };
 		A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
 		A356C0591B288DAA005B9DFB /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
 		A356C05E1B288DAA005B9DFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A356C05C1B288DAA005B9DFB /* Main.storyboard */; };
@@ -255,6 +256,7 @@
 				TargetAttributes = {
 					A356C04F1B288DAA005B9DFB = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 7YP5ZV7J9W;
 					};
 					A356C0671B288DAA005B9DFB = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -326,6 +328,7 @@
 				A356C08C1B28E567005B9DFB /* MainDataViewController.swift in Sources */,
 				A356C07C1B2896FF005B9DFB /* EndPoint.swift in Sources */,
 				A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */,
+				5B4E259F1B39F373009D7477 /* iGordonSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,9 +455,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iGordonSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -463,9 +469,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = iGordonSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

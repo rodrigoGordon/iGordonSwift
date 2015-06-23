@@ -40,15 +40,17 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
             options: NSJSONReadingOptions(0),
             error:  nil)
         
-
-        
         if let json = jsonObjectFromServer as? Dictionary<String, AnyObject>{
             
-            if let id = json["data"] as AnyObject? as? String {
-                value = id ;
+            if let id: AnyObject = json["data"] as AnyObject?  {
+
+                // using description to handle any object that comes from the server
+                value = id.description
+                
                 NSNotificationCenter.defaultCenter().postNotificationName("dataRetrievedFromServer",
-                                                           object: self, userInfo: [name: value]);
+                                                                          object: self, userInfo: [name: value]);
             }
+  
         }
         else{
           println("Error while parsing the data") ;
@@ -60,22 +62,19 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     
     func loadDataFromServer(userProfile: Dictionary<String,String?>){
         
-        /* This part will be done when the copyServer is ready.
-        var requestString = "http://api.adamvig.com/gocostudent/2.2/";
+      
+        var username: String = userProfile["username"]!! ,
+            password: String = userProfile["password"]!!  ;
         
-        requestString = requestString.stringByAppendingFormat("%@%@%@%@%@", name, "?username=", userProfile["username"]! ,
-            "&password=" , userProfile["password"]!);
-    
+        //Goco Server
+        let urlString = "http://api.adamvig.com/gocostudent/2.2/\(name)?username=\(username)&password=\(password)"
         
-        var request: NSURLRequest = NSURLRequest(URL: NSURL(string: requestString)!);
+        let urlGoco: NSURL = NSURL(string: urlString)!
         
-        var conn: NSURLConnection = NSURLConnection(request: request, delegate: self)!;
+        //debug server
+        let urlDebug = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/"+name+"?username=iGordon&password=swift");
         
-        */
-        
-        let username = "iGordon", password = "swift" ;
-        let url = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/"+name+"?username=iGordon&password=swift");
-        let request = NSMutableURLRequest(URL: url!);
+        let request = NSMutableURLRequest(URL: urlGoco);
         request.HTTPMethod = "GET" ;
         let urlConnection = NSURLConnection(request: request, delegate: self);
         
