@@ -24,7 +24,7 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     var responseData: NSMutableData  = NSMutableData();
     
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
-        responseData .appendData(data);
+        responseData.appendData(data);
         
     }
     func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {

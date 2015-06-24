@@ -9,15 +9,20 @@
 import UIKit
 import XCTest
 import Foundation
+import iGordonSwift
 
 class iGordonSwiftTests: XCTestCase {
-    
-    
-   
-    
+    var loginObj: LoginViewController!
+    var maindDataObj: MainDataViewController!
+    var userPreferencesObj: UserPreferencesViewController!
+    var userOptionsObj: UserOptionsMenuPopover!
+
     override func setUp() {
         super.setUp()
-        
+        self.loginObj = LoginViewController()
+        self.maindDataObj = MainDataViewController()
+        self.userPreferencesObj = UserPreferencesViewController()
+        self.userOptionsObj = UserOptionsMenuPopover()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -26,9 +31,17 @@ class iGordonSwiftTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testLoadViews(){
+
+        XCTAssertNotNil(loginObj.view, "View did not load for LoginViewController")
+        XCTAssertNotNil(maindDataObj.view, "View did not load for MainDataViewController")
+        XCTAssertNotNil(userPreferencesObj.view, "View did not load for UserPreferencesViewController")
+        XCTAssertNotNil(userOptionsObj.view, "View did not load for UserOptionsMenuViewController")
         
-        //let test = EndPoint()
+    }
+    
+    
+    func testExample() {
         
         // This is an example of a functional test case.
         XCTAssert(true, "Pass")
@@ -38,6 +51,7 @@ class iGordonSwiftTests: XCTestCase {
         // This is an example of a performance test case.
         self.measureBlock() {
             // Put the code you want to measure the time of here.
+            
         }
     }
     

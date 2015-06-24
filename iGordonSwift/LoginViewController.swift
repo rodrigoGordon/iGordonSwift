@@ -33,35 +33,47 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     @IBAction func btnLogin(sender: UIButton) {
         
-        userGordonName = txtUserName.text ;
         
-        userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        userGordonName = txtUserName.text
+        
+        userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?
+                                        .base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
 
-        performLoginAtServer();
-        txtPassword.resignFirstResponder();
+        performLoginAtServer()
+        
         activityLogin.hidden = false
         activityLogin.startAnimating()
-        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("returnsErrorMessageBadLogin"),
-            userInfo: nil, repeats: false)
         
+        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+                                                           userInfo: nil, repeats: false)
+        
+        
+        //needed to adjust the screen if the user press "All done!" instead of "Done" button in the keyboard
+        if viewAdjusted {
+            txtPassword.resignFirstResponder()
+            viewAdjusted = false
+            animateTextField(false)
+        }
+    
     }
     
     @IBOutlet weak var activityLogin: UIActivityIndicatorView!
     
     override func viewDidLoad() {
-        txtUserName.delegate = self
-        txtPassword.delegate = self
+        
+        txtUserName?.delegate = self
+        txtPassword?.delegate = self
         
         
-        
+  
     }
     
-    //function used to move the txtFields when the key board appears
+    //function used to move the txtFields when the keyboard appears
     func animateTextField(up: Bool){
         var movement = (up ? -keyBoardHeight : keyBoardHeight)
         if !viewAdjusted{
         UIView.animateWithDuration(0.3, animations: {
-                self.view.frame = CGRectOffset(self.view.frame, 0, movement/2) //move screen up or down by half of the height if the keyboard
+                self.view.frame = CGRectOffset(self.view.frame, 0, movement/2) //move screen up or down by half of the height of the keyboard
                 self.viewAdjusted = up
         })
         }
@@ -71,10 +83,28 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
         
+        super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        viewAdjusted = false
+        
     }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        activityLogin.hidden = true
+        self.navigationController?.navigationBar.hidden = true;
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"),
+            name:UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"),
+            name:UIKeyboardWillHideNotification, object: nil)
+ 
+    }
+    
     
     func keyboardWillShow(notification: NSNotification){
         if let userInfo = notification.userInfo{
@@ -92,12 +122,10 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     @IBAction func logoutFromPopover(segue: UIStoryboardSegue) {
         
-        txtUserName.text = "";
-        txtPassword.text = "";
-        viewAdjusted = false;
+        txtUserName.text.removeAll(keepCapacity: true);
+        txtPassword.text.removeAll(keepCapacity: true);
         lblEnterCredentials.text = "Enter your credentials for GoGordon";
         lblEnterCredentials.textColor = UIColor.whiteColor();
-    
     
         if !segue.sourceViewController.isBeingDismissed() {
        
@@ -145,22 +173,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
 
     }
 
-    
-     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        activityLogin.hidden = true
-        self.navigationController?.navigationBar.hidden = true;
-        
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"),
-                                                         name:UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"),
-                                                         name:UIKeyboardWillHideNotification, object: nil)
-        
-    }
-
-    
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         responseData .appendData(data);
     }
