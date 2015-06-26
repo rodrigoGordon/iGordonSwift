@@ -44,7 +44,7 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
             
             if let id: AnyObject = json["data"] as AnyObject?  {
 
-                // using description to handle any object that comes from the server
+                // using description to handle any object that will be received from the server from the server
                 value = id.description
                 
                 NSNotificationCenter.defaultCenter().postNotificationName("dataRetrievedFromServer",
@@ -63,11 +63,11 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     func loadDataFromServer(userProfile: Dictionary<String,String?>){
         
       
-        var username: String = userProfile["username"]!! ,
-            password: String = userProfile["password"]!!  ;
+        var username: String? = userProfile["username"]!
+        var password: String? = userProfile["password"]!  ;
         
         //Goco Server
-        let urlString = "http://api.adamvig.com/gocostudent/2.2/\(name)?username=\(username)&password=\(password)"
+        let urlString = "http://api.adamvig.com/gocostudent/2.2/\(name)?username=\(username!)&password=\(password!)"
         
         let urlGoco: NSURL = NSURL(string: urlString)!
         

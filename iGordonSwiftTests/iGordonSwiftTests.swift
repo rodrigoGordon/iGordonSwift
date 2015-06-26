@@ -12,10 +12,12 @@ import Foundation
 import iGordonSwift
 
 class iGordonSwiftTests: XCTestCase {
+    
     var loginObj: LoginViewController!
     var maindDataObj: MainDataViewController!
     var userPreferencesObj: UserPreferencesViewController!
     var userOptionsObj: UserOptionsMenuPopover!
+    var endPointObj: EndPoint!
 
     override func setUp() {
         super.setUp()
@@ -23,6 +25,7 @@ class iGordonSwiftTests: XCTestCase {
         self.maindDataObj = MainDataViewController()
         self.userPreferencesObj = UserPreferencesViewController()
         self.userOptionsObj = UserOptionsMenuPopover()
+        self.endPointObj = EndPoint()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -38,7 +41,28 @@ class iGordonSwiftTests: XCTestCase {
         XCTAssertNotNil(userPreferencesObj.view, "View did not load for UserPreferencesViewController")
         XCTAssertNotNil(userOptionsObj.view, "View did not load for UserOptionsMenuViewController")
         
+        
     }
+    
+    func testNotNilVariables(){
+        //EndPoint variables
+        XCTAssertNotNil(endPointObj.responseData, "Response data is nil")
+        
+        //LoginViewController variables
+        XCTAssertNotNil(loginObj.userGordonName, "username is nil")
+        XCTAssertNotNil(loginObj.userGordonPassword, "Userpassword is nil")
+        XCTAssertNotNil(loginObj.httpResponseFromServer, "httpResponse is nil")
+        XCTAssertNotNil(loginObj.keyBoardHeight, "keyboardheight is nil")
+        
+        //MainDataViewController variables
+        XCTAssertTrue(maindDataObj.userProfile.isEmpty, "userProfile is not empty!!")
+        XCTAssertNotNil(maindDataObj.endPointsDictionary, "endpoints dictionary is nil")
+        XCTAssertNotNil(maindDataObj.btnReorder, "btnReorder is nil")
+        XCTAssertNotNil(maindDataObj.btnShowAddOption, "btnShowAddOption is nil")
+        
+        
+    }
+    
     
     
     func testExample() {

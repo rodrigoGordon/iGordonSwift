@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import CoreData
 
 
 class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPopoverPresentationControllerDelegate {
@@ -21,13 +22,15 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     var userProfile: Dictionary<String,String?> = Dictionary(), endPointsDictionary: Dictionary<String,EndPoint> = Dictionary();
     
-    
+    /*
     var userTablePreferences: [String] = ["chapelcredits",
                                           "mealpoints",
                                           "mealpointsperday",
                                           "daysleftinsemester",
                                           "studentid",
                                           "temperature"];
+    */
+    var userTablePreferences: [String] = Array()
     
     var btnShowAddOption: UIBarButtonItem = UIBarButtonItem(), btnReorder: UIBarButtonItem = UIBarButtonItem();
     
@@ -147,6 +150,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     }else{
      
         tableViewData?.setEditing(false, animated: false);
+        updateUserPreferencesInDB()
     
     }
         
@@ -192,10 +196,55 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             
             
         }
-        
+                
+        updateUserPreferencesInDB()
 
-    
     }
+    
+    
+    func updateUserPreferencesInDB(){
+        
+        
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext!
+        
+        let fetchRequest = NSFetchRequest(entityName: "GordonUser")
+        let predicate = NSPredicate(format: "sessionStatus==%@", "in")
+        fetchRequest.predicate = predicate
+        
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [GordonUser]{
+            
+            
+            if (fetchResults.count >= 1) {
+                
+                var userGordon = fetchResults[0]
+                
+                var userPrefencesString: String = userTablePreferences.count >= 1 ? ",".join(userTablePreferences) :
+                                "chapelcredits,mealpoints,mealpointsperday,daysleftinsemester,studentid,temperature"
+                
+                
+                
+                userGordon.tablePreferences = userPrefencesString
+                var saveError: NSError? = nil
+                if !managedContext.save(&saveError){
+                    println("Problems altering user preferences:  \(saveError)")
+                }
+                
+            }
+            
+            
+        }else{
+            println("Error loading the data")
+        }
+  
+    }
+    
+    
+    
+    
+    
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true ;

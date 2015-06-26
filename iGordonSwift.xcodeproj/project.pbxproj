@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B019BA01B3C819900BB6C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
+		5B019BA21B3C859400BB6C0F /* GordonUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B019BA11B3C859400BB6C0F /* GordonUser.swift */; };
+		5B019BA31B3C85CE00BB6C0F /* GordonUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B019BA11B3C859400BB6C0F /* GordonUser.swift */; };
 		5B4E25A01B39F6CA009D7477 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C07B1B2896FF005B9DFB /* EndPoint.swift */; };
 		5B4E25A11B39F70A009D7477 /* UserOptionsMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0861B28D218005B9DFB /* UserOptionsMenuPopover.swift */; };
 		5B4E25A21B39F70D009D7477 /* UserPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C07F1B28BD49005B9DFB /* UserPreferencesViewController.swift */; };
@@ -50,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B019BA11B3C859400BB6C0F /* GordonUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GordonUser.swift; sourceTree = "<group>"; };
 		A356C0501B288DAA005B9DFB /* iGordonSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGordonSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A356C0541B288DAA005B9DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A356C0551B288DAA005B9DFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				A356C07B1B2896FF005B9DFB /* EndPoint.swift */,
+				5B019BA11B3C859400BB6C0F /* GordonUser.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				A356C0871B28D218005B9DFB /* UserOptionsMenuPopover.swift in Sources */,
 				A356C0591B288DAA005B9DFB /* iGordonSwift.xcdatamodeld in Sources */,
 				A356C0831B28CD97005B9DFB /* TableViewCellUserDataCustom.swift in Sources */,
+				5B019BA21B3C859400BB6C0F /* GordonUser.swift in Sources */,
 				A356C08C1B28E567005B9DFB /* MainDataViewController.swift in Sources */,
 				A356C07C1B2896FF005B9DFB /* EndPoint.swift in Sources */,
 				A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */,
@@ -340,10 +346,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B019BA01B3C819900BB6C0F /* AppDelegate.swift in Sources */,
 				5B4E25A51B39F717009D7477 /* LoginViewController.swift in Sources */,
 				5B4E25A31B39F710009D7477 /* TableViewCellUserDataCustom.swift in Sources */,
 				5B4E25A41B39F713009D7477 /* MainDataViewController.swift in Sources */,
 				5B4E25A01B39F6CA009D7477 /* EndPoint.swift in Sources */,
+				5B019BA31B3C85CE00BB6C0F /* GordonUser.swift in Sources */,
 				5B4E25A11B39F70A009D7477 /* UserOptionsMenuPopover.swift in Sources */,
 				5B4E25A21B39F70D009D7477 /* UserPreferencesViewController.swift in Sources */,
 				A356C06F1B288DAA005B9DFB /* iGordonSwiftTests.swift in Sources */,
