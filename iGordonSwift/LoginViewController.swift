@@ -42,7 +42,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     var mainDataViewController: MainDataViewController = MainDataViewController();
     var keyBoardHeight: CGFloat! = 0;
     var viewAdjusted: Bool = false ;
-    
+    var urlConnection: NSURLConnection = NSURLConnection();
 
 
     override func viewDidLoad() {
@@ -137,8 +137,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         activityLogin.hidden = false
         activityLogin.startAnimating()
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("returnsErrorMessageBadLogin"),
-            userInfo: nil, repeats: false)
+        
         
         
         //needed to adjust the screen if the user press "All done!" instead of "Done" button in the keyboard
@@ -147,6 +146,10 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
             viewAdjusted = false
             animateTextField(false)
         }
+        
+        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+            userInfo: nil, repeats: false)
         
     }
     
@@ -191,7 +194,8 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         
         request.HTTPMethod = "GET" ;
-        let urlConnection = NSURLConnection(request: request, delegate: self);
+        urlConnection = NSURLConnection(request: request, delegate: self)!;
+        
 
 
     }
@@ -199,6 +203,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     func returnsErrorMessageBadLogin(){
         
+        urlConnection.cancel()
         activityLogin.hidden = true
         activityLogin.stopAnimating()
         
@@ -226,7 +231,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         let httpResponse = response as? NSHTTPURLResponse
         httpResponseFromServer = httpResponse!.statusCode
         
-        
     }
     
     func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
@@ -240,10 +244,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
             saveLoginInDB()
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
             
-        }else{
-            returnsErrorMessageBadLogin();
         }
-
         
     }
 
@@ -372,6 +373,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
                 
                 var userGordon = fetchResults[0]
                 userGordon.sessionStatus = "out"
+                userGordon.password = ""
                 var saveError: NSError? = nil
                 if !managedContext.save(&saveError){
                   println("Problems logging out:  \(saveError)")

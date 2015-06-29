@@ -22,14 +22,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     var userProfile: Dictionary<String,String?> = Dictionary(), endPointsDictionary: Dictionary<String,EndPoint> = Dictionary();
     
-    /*
-    var userTablePreferences: [String] = ["chapelcredits",
-                                          "mealpoints",
-                                          "mealpointsperday",
-                                          "daysleftinsemester",
-                                          "studentid",
-                                          "temperature"];
-    */
+
     var userTablePreferences: [String] = Array()
     
     var btnShowAddOption: UIBarButtonItem = UIBarButtonItem(), btnReorder: UIBarButtonItem = UIBarButtonItem();
