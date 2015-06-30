@@ -89,7 +89,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tx1-LK-Peg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="243" y="-514"/>
+            <point key="canvasLocation" x="311" y="-498"/>
         </scene>
         <!--iGordonSwift-->
         <scene sceneID="Qej-GH-vxS">

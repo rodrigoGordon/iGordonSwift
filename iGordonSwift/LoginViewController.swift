@@ -64,12 +64,12 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     override func viewWillAppear(animated: Bool) {
         
         if checkLoginInDB() {
+            self.view.hidden = true
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
         }
         
         super.viewWillAppear(animated)
         
-
         activityLogin.hidden = true
         self.navigationController?.navigationBar.hidden = true;
         
@@ -156,6 +156,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
 
     @IBAction func logoutFromPopover(segue: UIStoryboardSegue) {
         
+        self.view.hidden = false
         txtUserName.text.removeAll(keepCapacity: true);
         txtPassword.text.removeAll(keepCapacity: true);
         lblEnterCredentials.text = "Enter your credentials for GoGordon";
