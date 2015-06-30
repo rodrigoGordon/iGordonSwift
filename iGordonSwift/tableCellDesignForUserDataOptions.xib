@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -12,33 +12,29 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kDY-Sa-FqV" id="V3r-Ig-p35">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cvx-g0-7xp" customClass="SpringImageView" customModule="iGordonSwift">
+                        <rect key="frame" x="8" y="25" width="110" height="50"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQ2-xH-mJL">
-                        <rect key="frame" x="131" y="8" width="138" height="50"/>
+                        <rect key="frame" x="197" y="35" width="138" height="50"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="20"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-kt-peu">
-                        <rect key="frame" x="346" y="48" width="20" height="20"/>
-                    </activityIndicatorView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Result" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iJK-nJ-mTX">
-                        <rect key="frame" x="277" y="34" width="37" height="48"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="11"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Result" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7oJ-ps-uxz" customClass="SpringLabel" customModule="iGordonSwift">
+                        <rect key="frame" x="8" y="25" width="110" height="50"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Elf-Oa-tuo">
-                        <rect key="frame" x="22" y="18" width="50" height="50"/>
-                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="activityIndicatorWorkServer" destination="EXc-kt-peu" id="OeW-67-B1v"/>
-                <outlet property="imgIconForEndPoint" destination="Elf-Oa-tuo" id="YNz-Qf-sRj"/>
+                <outlet property="imgIconForEndPoint" destination="cvx-g0-7xp" id="7kb-Ws-Xgw"/>
                 <outlet property="lblDescriptionOfEndPoint" destination="cQ2-xH-mJL" id="DTD-Pj-ARO"/>
-                <outlet property="lblResultFromServer" destination="iJK-nJ-mTX" id="k2u-v3-WBN"/>
+                <outlet property="lblResultFromServer" destination="7oJ-ps-uxz" id="62s-H0-BVV"/>
             </connections>
-            <point key="canvasLocation" x="314" y="173.5"/>
+            <point key="canvasLocation" x="140" y="169.5"/>
         </tableViewCell>
     </objects>
 </document>

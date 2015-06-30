@@ -14,11 +14,8 @@ import CoreData
 class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPopoverPresentationControllerDelegate {
 
 
-    
-    
-    
-    
     @IBOutlet var tableViewData: UITableView!;
+    
     
     var userProfile: Dictionary<String,String?> = Dictionary(), endPointsDictionary: Dictionary<String,EndPoint> = Dictionary();
     
@@ -130,6 +127,15 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         tableViewData?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade);
 
         tableViewData?.endUpdates();
+        
+        var cell = tableViewData.cellForRowAtIndexPath(indexPath)! as! TableViewCellUserDataCustom
+        cell.setOptionsForAnimationInResultLabel()
+        cell.lblResultFromServer.hidden = false
+        cell.imgIconForEndPoint.hidden = true
+        cell.setOptionsForAnimationInResultLabel()
+        cell.lblResultFromServer.animate()
+        
+        
     
     }
     
@@ -275,7 +281,6 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
         
-        cell.activityIndicatorWorkServer.hidden = true ;
         cell.lblDescriptionOfEndPoint.text = tempEndPoint!.cellDescription;
         cell.imgIconForEndPoint.image = UIImage(named: tempEndPoint!.image)!;
         
@@ -306,16 +311,11 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         endPointsDictionary[userTablePreferences[indexPath.row]]?.loadDataFromServer(userProfile);
         
-        let identifier = "tableCellDesignUserDataOptions";
-        
-        var cell: TableViewCellUserDataCustom = tableView.dequeueReusableCellWithIdentifier(identifier)
-                                                as! TableViewCellUserDataCustom
-
-        
-        cell.activityIndicatorWorkServer.hidden = false ;
-        cell.activityIndicatorWorkServer.startAnimating();
-        
-        
+        var cell = tableView.cellForRowAtIndexPath(indexPath)! as! TableViewCellUserDataCustom
+        cell.imgIconForEndPoint.hidden = false
+        cell.lblResultFromServer.hidden = true
+        cell.setOptionsForAnimationInIcon()
+        cell.imgIconForEndPoint.animate()
         
     }
     

@@ -40,6 +40,9 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
             options: NSJSONReadingOptions(0),
             error:  nil)
         
+        responseData = NSMutableData() //reset the data object to receive new requests
+        
+        
         if let json = jsonObjectFromServer as? Dictionary<String, AnyObject>{
             
             if let id: AnyObject = json["data"] as AnyObject?  {
@@ -74,7 +77,7 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
         //debug server
         let urlDebug = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/"+name+"?username=iGordon&password=swift");
         
-        let request = NSMutableURLRequest(URL: urlGoco);
+        let request = NSMutableURLRequest(URL: urlDebug!);
         request.HTTPMethod = "GET" ;
         let urlConnection = NSURLConnection(request: request, delegate: self);
         
