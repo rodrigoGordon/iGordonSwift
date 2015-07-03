@@ -27,8 +27,8 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
         btnShowAddOption = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "btnShowPopoverAddRemove:");
         btnReorder = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize , target: self, action: "activateReorder");
     
@@ -108,7 +108,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(animated: Bool) {
     
-    self.navigationItem.hidesBackButton = true;
+        self.navigationItem.hidesBackButton = true;
     
     }
     
@@ -141,17 +141,16 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     func activateReorder(){
         
-
-    if(tableViewData?.editing == false){
+        if(tableViewData?.editing == false){
      
-    tableViewData?.setEditing(true, animated: true);
+            tableViewData?.setEditing(true, animated: true);
     
-    }else{
+        }else{
      
-        tableViewData?.setEditing(false, animated: false);
-        updateUserPreferencesInDB()
+            tableViewData?.setEditing(false, animated: false);
+            updateUserPreferencesInDB()
     
-    }
+        }
         
     }
     
@@ -159,10 +158,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     func updateTableAfterChangesAtUserPreferences(notification: NSNotification){
     
         
+        
+        
         let tempParseFromNotification: Dictionary<String,[String]> =
             (notification.userInfo as? Dictionary<String,[String]>)!;
         
-
+        
         let tempUserPreferencesChanges: [String] = tempParseFromNotification["userPreferences"]! ;
         
         var copyOfUserTablePreferences = userTablePreferences;
@@ -175,12 +176,15 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 var i: Int = find(tempUserPreferencesChanges, obj)! ;
                 var indexPath = NSIndexPath(forRow: i, inSection: 0);
                 userTablePreferences.append(obj);
-                tableViewData?.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-                
+                tableViewData.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                tableViewData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
             }
 
             
         }
+      
+         tableViewData.reloadData()
+        
         
         for obj in copyOfUserTablePreferences{
             
@@ -188,14 +192,19 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 
                 var i: Int = find(userTablePreferences, obj)! ;
                 var indexPath = NSIndexPath(forRow: i, inSection: 0);
+                
                 userTablePreferences.removeAtIndex(i) ;
-                tableViewData?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade) ;
+                println(userTablePreferences)
+                tableViewData.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                
                 
             }
             
             
         }
-                
+        
+        
+        
         updateUserPreferencesInDB()
 
     }
@@ -221,7 +230,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 var userGordon = fetchResults[0]
                 
                 var userPrefencesString: String = userTablePreferences.count >= 1 ? ",".join(userTablePreferences) :
-                                "chapelcredits,mealpoints,mealpointsperday,daysleftinsemester,studentid,temperature"
+                            "chapelcredits,mealpoints,mealpointsperday,daysleftinsemester,studentid,temperature"
                 
                 
                 
@@ -294,11 +303,10 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         cell.backgroundColor = backGroundCellImg;
         
         cell.lblDescriptionOfEndPoint.textColor = UIColor.whiteColor();
+        
         cell.lblResultFromServer.textColor = UIColor.whiteColor();
         cell.lblResultFromServer.text = tempEndPoint!.value as String ;
-        
-        
-        
+
         return cell;
     }
     
@@ -390,10 +398,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     @IBAction func btnShowPopoverAddRemove (sender: UIBarButtonItem){
         
-        
-        
         self.performSegueWithIdentifier("showAddOptions", sender: self);
-    
     
     }
     
@@ -410,9 +415,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     }
     
-    
-    
-    
+   
     
 
 }

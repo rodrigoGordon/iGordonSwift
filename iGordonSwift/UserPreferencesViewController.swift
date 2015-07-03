@@ -29,7 +29,9 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
     
     override func viewWillDisappear(animated: Bool) {
         
+        if(userSelectedOptions.count >= 1){
         NSNotificationCenter.defaultCenter().postNotificationName("userPreferencesUpdated", object: self, userInfo: ["userPreferences": userSelectedOptions]);
+        }
  
     }
     

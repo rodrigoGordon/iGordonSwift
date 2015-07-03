@@ -52,6 +52,12 @@ class iGordonSwiftTests: XCTestCase {
         XCTAssertNotNil(loginObj.userGordonName, "username is nil")
         XCTAssertNotNil(loginObj.userGordonPassword, "Userpassword is nil")
         XCTAssertNotNil(loginObj.httpResponseFromServer, "httpResponse is nil")
+        XCTAssertNil(loginObj.activityLogin, "activity Indicator is nil")
+        //test for a cancel of non existent request
+        loginObj.returnsErrorMessageBadLogin()
+        
+        loginObj.performLoginAtServer()
+        XCTAssertNotNil(loginObj.urlConnection, "Connection is nil!! Please Review perforLoginAtServer method!!")
         XCTAssertNotNil(loginObj.keyBoardHeight, "keyboardheight is nil")
         
         //MainDataViewController variables

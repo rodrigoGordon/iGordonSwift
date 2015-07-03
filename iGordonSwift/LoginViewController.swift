@@ -2,10 +2,10 @@
 //  LoginViewController.swift
 //  iGordonSwift
 //
-//  The class will manage the process of talking with tthe server and the CoreData
+//  The class will manage the process of talking with the server and the CoreData
 //   SqlLite database. A main constraint is sessionStatus which represents simply "in" or "out",
 //   using as a way to define if the app is not in the memory anymore but the user still logged "in"
-//
+//   or "out"
 //
 //
 //  Created by Rodrigo Amaral on 6/10/15.
@@ -87,7 +87,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     //function used to move the txtFields when the keyboard appears
     func animateTextField(up: Bool){
         var movement = (up ? -keyBoardHeight : keyBoardHeight)
-        if !viewAdjusted{
+        if !viewAdjusted {
             UIView.animateWithDuration(0.3, animations: {
                 self.view.frame = CGRectOffset(self.view.frame, 0, movement/2) //move screen up or down by half of the height of the keyboard
                 self.viewAdjusted = up
@@ -127,6 +127,8 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     @IBAction func btnLogin(sender: UIButton) {
         
        
+        
+        if( txtUserName.text.length >= 3 && txtPassword.text.length >= 3){
         userGordonName = txtUserName.text
         
         userGordonPassword = txtPassword.text.dataUsingEncoding(NSUTF8StringEncoding)?
@@ -148,8 +150,12 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         }
         
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+        var timer = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: Selector("returnsErrorMessageBadLogin"),
             userInfo: nil, repeats: false)
+        
+        }else {
+            returnsErrorMessageBadLogin()
+        }
         
     }
     
