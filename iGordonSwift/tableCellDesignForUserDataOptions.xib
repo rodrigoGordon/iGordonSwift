@@ -12,7 +12,7 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kDY-Sa-FqV" id="V3r-Ig-p35">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cvx-g0-7xp" customClass="SpringImageView" customModule="iGordonSwift">
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cvx-g0-7xp" customClass="SpringImageView" customModule="iGordonSwift">
                         <rect key="frame" x="23" y="35" width="50" height="50"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="cQ2-xH-mJL">
@@ -27,14 +27,21 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6H9-cV-me5" customClass="SpringLabel" customModule="iGordonSwift">
+                        <rect key="frame" x="41" y="85" width="15" height="21"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="imgIconForEndPoint" destination="cvx-g0-7xp" id="7kb-Ws-Xgw"/>
                 <outlet property="lblDescriptionOfEndPoint" destination="cQ2-xH-mJL" id="DTD-Pj-ARO"/>
+                <outlet property="lblLogPeriod" destination="6H9-cV-me5" id="jeu-nl-mgm"/>
                 <outlet property="lblResultFromServer" destination="7oJ-ps-uxz" id="62s-H0-BVV"/>
             </connections>
-            <point key="canvasLocation" x="-108" y="4.5"/>
+            <point key="canvasLocation" x="-279" y="-196.5"/>
         </tableViewCell>
     </objects>
 </document>

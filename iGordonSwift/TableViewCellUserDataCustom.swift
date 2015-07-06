@@ -18,6 +18,7 @@ class TableViewCellUserDataCustom: UITableViewCell {
     
     @IBOutlet weak var lblResultFromServer: SpringLabel!
 
+    @IBOutlet weak var lblLogPeriod: SpringLabel!
     
     
     
@@ -80,7 +81,6 @@ class TableViewCellUserDataCustom: UITableViewCell {
         
     }
     
-    
-    
+
     
 }

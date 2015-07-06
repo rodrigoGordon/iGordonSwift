@@ -320,8 +320,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
             var error: NSError?
             if !managedContext.save(&error) {
                 println("Could not save \(error), \(error?.userInfo)")
-            }else{
-                println("User created in the DB")
             }
         }
     }

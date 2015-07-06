@@ -104,6 +104,10 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
         
         
+        let identifier = "tableCellDesignUserDataOptions";
+        // IT"S mandatory to register a NIB
+        tableViewData.registerNib(UINib(nibName: "tableCellDesignForUserDataOptions", bundle: nil), forCellReuseIdentifier: identifier);
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -194,7 +198,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 var indexPath = NSIndexPath(forRow: i, inSection: 0);
                 
                 userTablePreferences.removeAtIndex(i) ;
-                println(userTablePreferences)
+                
                 tableViewData.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 
                 
@@ -249,10 +253,111 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
   
     }
     
+    func saveSearchOnDB(endPointDescription: String){
+        
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext!
+        
+        
+        let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
+  
+        let resultPredicate1 = NSPredicate(format: "idUser==%@", userProfile["username"]!!)
+        let resultPredicate2 = NSPredicate(format: "endPointSearched==%@", endPointDescription)
+        
+        var compound = NSCompoundPredicate.andPredicateWithSubpredicates([resultPredicate1, resultPredicate2])
+        fetchRequest.predicate = compound
+
+
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
+            
+            if fetchResults.count >= 1{
+
+            var logUpdate = fetchResults[0]
+            logUpdate.dateOfSearch = NSDate()
+                println(logUpdate.dateOfSearch)
+            var saveError: NSError? = nil
+                
+            if !managedContext.save(&saveError){
+                println("Problems logging out:  \(saveError)")
+            }
+
+            }else{
+                
+                var logs = NSEntityDescription.insertNewObjectForEntityForName("LogResultsFromServer",
+                    inManagedObjectContext: managedContext) as! LogResultsFromServer
+                
+                logs.idUser = userProfile["username"]!!
+                logs.endPointSearched = endPointDescription
+                logs.dateOfSearch = NSDate()
+                
+                var error: NSError?
+                if !managedContext.save(&error) {
+                    println("Could not save \(error), \(error?.userInfo)")
+                }else{
+                    println("Log created in the DB")
+                }
+                
+            }
+            
+        
+        }else{
+            println("Error while trying to save or update a log")
+        }
+
+    }
+    
+    func loadLastSearchFromDB(endPointDescription: String) -> Int{
+        
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext!
+        
+        let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
+        let resultPredicate1 = NSPredicate(format: "idUser==%@", userProfile["username"]!!)
+        let resultPredicate2 = NSPredicate(format: "endPointSearched==%@", endPointDescription)
+        
+        var compound = NSCompoundPredicate.andPredicateWithSubpredicates([resultPredicate1, resultPredicate2])
+        fetchRequest.predicate = compound
+        
+        var logReturn: Int = 0
+        
+        
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
+            
+            
+            if (fetchResults.count >= 1) {
+                
+                //total in hours that the last logs was recorded
+                let logPeriod = (fetchResults[0].dateOfSearch.timeIntervalSinceNow)/3600
+                
+                if logPeriod < -10 && logPeriod > -24{
+                    logReturn = 1
+                }else if logPeriod < -24{
+                    logReturn = 2
+                }
+                
+                
+            
+            }else {
+                logReturn = 2
+            }
+   
+            
+        }else{
+            println("Error trying to retrieve the logs")
+        }
+        
+        // return 0 if new , 1 if avg , 2 if old ( more than a day )
+        return logReturn
+    }
     
     
     
     
+
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true ;
@@ -275,16 +380,15 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         return userTablePreferences.count;
     }
     
+
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
-        
+    
         let identifier = "tableCellDesignUserDataOptions";
-        // IT"S mandatory to register a NIB
-        tableView.registerNib(UINib(nibName: "tableCellDesignForUserDataOptions", bundle: nil), forCellReuseIdentifier: identifier);
+
         
         var cell: TableViewCellUserDataCustom = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TableViewCellUserDataCustom;
-        
         
         var tempEndPoint =  endPointsDictionary[userTablePreferences[indexPath.row]];
         
@@ -297,7 +401,6 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             blue: tempEndPoint!.colorRGB[2] , alpha: 1);
         
         
-        
         cell.imgIconForEndPoint.backgroundColor = backGroundCellImg;
         
         cell.backgroundColor = backGroundCellImg;
@@ -306,10 +409,48 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         cell.lblResultFromServer.textColor = UIColor.whiteColor();
         cell.lblResultFromServer.text = tempEndPoint!.value as String ;
+        
+        cell.lblLogPeriod.textColor = UIColor.whiteColor()
+        
+        
+        switch loadLastSearchFromDB(tempEndPoint!.name){
+        case 0:
+            cell.lblLogPeriod.text = "."
+            break
+        case 1:
+            cell.lblLogPeriod.text = ".."
+            break
+        default:
+            cell.lblLogPeriod.text = "..."
+        }
+        
+        
+        
+        
+        /*
+        if userTablePreferences.count < 4 {
+            
+        //    UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
+            cell.imgIconForEndPoint.center.x = cell.bounds.width - 150
+            cell.lblResultFromServer.center.x = cell.bounds.width - 150
+            cell.lblDescriptionOfEndPoint.center.y += 60
+            cell.lblDescriptionOfEndPoint.center.x -= 10
 
+          //      }, completion: nil)
+            */
+            
+        //}
+        
+        
+        
+       
+       
+        
         return cell;
+      
     }
     
+ 
 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -320,11 +461,13 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         endPointsDictionary[userTablePreferences[indexPath.row]]?.loadDataFromServer(userProfile);
         
         var cell = tableView.cellForRowAtIndexPath(indexPath)! as! TableViewCellUserDataCustom
+        
         cell.imgIconForEndPoint.hidden = false
         cell.lblResultFromServer.hidden = true
         cell.setOptionsForAnimationInIcon()
         cell.imgIconForEndPoint.animate()
         
+        saveSearchOnDB(endPointsDictionary[userTablePreferences[indexPath.row]]!.name)
     }
     
    

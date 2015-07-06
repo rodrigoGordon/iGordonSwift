@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="GordonUser" representedClassName="iGordonSwift.GordonUser" syncable="YES">
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sessionStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tablePreferences" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fkLog" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogResultsFromServer" inverseName="fkGordonUser" inverseEntity="LogResultsFromServer" syncable="YES"/>
+    </entity>
+    <entity name="LogResultsFromServer" representedClassName="iGordonSwift.LogResultsFromServer" syncable="YES">
+        <attribute name="dateOfSearch" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="endPointSearched" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idUser" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fkGordonUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GordonUser" inverseName="fkLog" inverseEntity="GordonUser" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GordonUser" positionX="-1593" positionY="-1764" width="128" height="103"/>
+        <element name="GordonUser" positionX="-1593" positionY="-1764" width="128" height="120"/>
+        <element name="LogResultsFromServer" positionX="-1593" positionY="-1737" width="128" height="105"/>
     </elements>
 </model>

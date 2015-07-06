@@ -74,6 +74,9 @@
 		5BB271C91B43357100CB467B /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271901B43357100CB467B /* TransitionZoom.swift */; };
 		5BB271CA1B43357100CB467B /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271911B43357100CB467B /* UnwindSegue.swift */; };
 		5BB271CB1B43357100CB467B /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271911B43357100CB467B /* UnwindSegue.swift */; };
+		5BFE01C11B4ACE4100469A47 /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
+		5BFE01C31B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */; };
+		5BFE01C41B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */; };
 		A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
 		A356C0591B288DAA005B9DFB /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
 		A356C05E1B288DAA005B9DFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A356C05C1B288DAA005B9DFB /* Main.storyboard */; };
@@ -142,6 +145,7 @@
 		5BB2718F1B43357100CB467B /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 		5BB271901B43357100CB467B /* TransitionZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionZoom.swift; sourceTree = "<group>"; };
 		5BB271911B43357100CB467B /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
+		5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogResultsFromServer.swift; sourceTree = "<group>"; };
 		A356C0501B288DAA005B9DFB /* iGordonSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGordonSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A356C0541B288DAA005B9DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A356C0551B288DAA005B9DFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 			children = (
 				A356C07B1B2896FF005B9DFB /* EndPoint.swift */,
 				5B019BA11B3C859400BB6C0F /* GordonUser.swift */,
+				5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -468,6 +473,7 @@
 				5BB271A41B43357100CB467B /* DesignableTextView.swift in Sources */,
 				5BB271C81B43357100CB467B /* TransitionZoom.swift in Sources */,
 				5BB271C01B43357100CB467B /* SpringTextField.swift in Sources */,
+				5BFE01C31B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */,
 				5BB2719C1B43357100CB467B /* DesignableImageView.swift in Sources */,
 				A356C0801B28BD49005B9DFB /* UserPreferencesViewController.swift in Sources */,
 				A356C0871B28D218005B9DFB /* UserOptionsMenuPopover.swift in Sources */,
@@ -505,7 +511,9 @@
 			files = (
 				5BB271BB1B43357100CB467B /* SpringButton.swift in Sources */,
 				5BB271B51B43357100CB467B /* SoundPlayer.swift in Sources */,
+				5BFE01C41B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */,
 				5BB271C31B43357100CB467B /* SpringTextView.swift in Sources */,
+				5BFE01C11B4ACE4100469A47 /* iGordonSwift.xcdatamodeld in Sources */,
 				5B019BA01B3C819900BB6C0F /* AppDelegate.swift in Sources */,
 				5BB271A31B43357100CB467B /* DesignableTextField.swift in Sources */,
 				5BB271A51B43357100CB467B /* DesignableTextView.swift in Sources */,
