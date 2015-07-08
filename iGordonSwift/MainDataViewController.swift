@@ -207,6 +207,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             
         }
         
+        tableViewData.reloadData()
         
         
         updateUserPreferencesInDB()
@@ -350,7 +351,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             println("Error trying to retrieve the logs")
         }
         
-        // return 0 if new , 1 if avg , 2 if old ( more than a day )
+        // return 0 if new (.) , 1 if avg(..) , 2 if old ( more than a day )(...)
         return logReturn
     }
     
@@ -392,8 +393,6 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         var tempEndPoint =  endPointsDictionary[userTablePreferences[indexPath.row]];
         
-        
-        
         cell.lblDescriptionOfEndPoint.text = tempEndPoint!.cellDescription;
         cell.imgIconForEndPoint.image = UIImage(named: tempEndPoint!.image)!;
         
@@ -427,24 +426,30 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
         
-        /*
-        if userTablePreferences.count < 4 {
+        
+        if userTablePreferences.count < 4  {
             
-        //    UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
-            cell.imgIconForEndPoint.center.x = cell.bounds.width - 150
-            cell.lblResultFromServer.center.x = cell.bounds.width - 150
-            cell.lblDescriptionOfEndPoint.center.y += 60
-            cell.lblDescriptionOfEndPoint.center.x -= 10
+            UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
+                cell.imgIconForEndPoint.center.x = cell.lblDescriptionOfEndPoint.center.x
+                cell.lblResultFromServer.center.x = cell.lblDescriptionOfEndPoint.center.x
+                cell.lblLogPeriod.center.x = cell.lblDescriptionOfEndPoint.center.x
+                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y + cell.lblLogPeriod.frame.size.height + 5
+                
+                
 
-          //      }, completion: nil)
-            */
+                }, completion: nil)
+        }else{
             
-        //}
-        
-        
-        
-       
-       
+            UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
+                cell.imgIconForEndPoint.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
+                cell.lblResultFromServer.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
+                cell.lblLogPeriod.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
+                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y - cell.lblLogPeriod.frame.size.height - 5
+                
+                }, completion: nil)
+            
+        }
+
         
         return cell;
       
@@ -464,6 +469,8 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         cell.imgIconForEndPoint.hidden = false
         cell.lblResultFromServer.hidden = true
+        cell.selectedX = cell.imgIconForEndPoint.center.x
+        cell.selectedY = cell.imgIconForEndPoint.center.y
         cell.setOptionsForAnimationInIcon()
         cell.imgIconForEndPoint.animate()
         

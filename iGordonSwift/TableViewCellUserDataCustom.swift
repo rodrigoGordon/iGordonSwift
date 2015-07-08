@@ -22,7 +22,7 @@ class TableViewCellUserDataCustom: UITableViewCell {
     
     
     
-    var selectedRow: Int = 0
+    
     var selectedEasing: Int = 0
     
     var selectedForce: CGFloat = 1
@@ -36,8 +36,7 @@ class TableViewCellUserDataCustom: UITableViewCell {
     var selectedY: CGFloat = 0
     var selectedRotate: CGFloat = 0
     var repeatCount: Float = 100
-  
-    
+
     func setOptionsForAnimationInIcon() {
         
         

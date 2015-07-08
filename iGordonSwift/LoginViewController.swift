@@ -42,6 +42,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     var mainDataViewController: MainDataViewController = MainDataViewController();
     var keyBoardHeight: CGFloat! = 0;
     var viewAdjusted: Bool = false ;
+    var loginAttempted: Bool = false;
     var urlConnection: NSURLConnection = NSURLConnection();
 
 
@@ -143,16 +144,14 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         
         //needed to adjust the screen if the user press "All done!" instead of "Done" button in the keyboard
-        if viewAdjusted {
-            txtPassword.resignFirstResponder()
-            viewAdjusted = false
-            animateTextField(false)
-        }
+          if viewAdjusted {
+              txtPassword.resignFirstResponder()
+              viewAdjusted = false
+              animateTextField(false)
+          }
+
         
-        
-        var timer = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: Selector("returnsErrorMessageBadLogin"),
-            userInfo: nil, repeats: false)
-        
+            
         }else {
             returnsErrorMessageBadLogin()
         }
@@ -195,7 +194,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         
         //url used to connect to the debug server
-        let url: NSURL = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift")!;
+        let url: NSURL = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swwift")!;
         
         let request = NSMutableURLRequest(URL: url);
         
@@ -203,30 +202,39 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         request.HTTPMethod = "GET" ;
         urlConnection = NSURLConnection(request: request, delegate: self)!;
         
-
+        var timer = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+            userInfo: nil, repeats: false)
 
     }
     
     
     func returnsErrorMessageBadLogin(){
-        
+    
+        if !loginAttempted {
+            loginAttempted = true
+            dispatch_async(dispatch_get_main_queue(), {
+                //compiler requires to use self here
+                
+                self.lblEnterCredentials.textColor = UIColor.orangeColor();
+                self.lblEnterCredentials.text = "No answer...Trying again"
+                self.urlConnection.cancel()
+                self.performLoginAtServer()
+            });
+        }else{
+            
         urlConnection.cancel()
         activityLogin.hidden = true
         activityLogin.stopAnimating()
         
         dispatch_async(dispatch_get_main_queue(), {
             //compiler requires to use self.label here
-            
             self.lblEnterCredentials.textColor = UIColor.redColor();
-            self.lblEnterCredentials.text = "Incorrect credentials"
+            self.lblEnterCredentials.text = "Please check your credentials"
         });
-        
+        }
         
         
     }
-    
-    
-    
     
 
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
@@ -234,7 +242,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
     func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
-        
         let httpResponse = response as? NSHTTPURLResponse
         httpResponseFromServer = httpResponse!.statusCode
         
