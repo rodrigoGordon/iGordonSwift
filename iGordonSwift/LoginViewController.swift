@@ -39,10 +39,15 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     var endPointsFromDB: [String] = [];
     
     var httpResponseFromServer: Int = 0;
+    
     var mainDataViewController: MainDataViewController = MainDataViewController();
+    var dbManagement: DatabaseManagement = DatabaseManagement();
+    
     var keyBoardHeight: CGFloat! = 0;
     var viewAdjusted: Bool = false ;
     var loginAttempted: Bool = false;
+    
+    
     var urlConnection: NSURLConnection = NSURLConnection();
 
 
@@ -64,7 +69,13 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     override func viewWillAppear(animated: Bool) {
         
-        if checkLoginInDB() {
+        let (userExists, endPointsDBCheckLogin, username, password) = dbManagement.checkLoginInDB()
+        
+        if userExists {
+            endPointsFromDB = endPointsDBCheckLogin
+            userGordonName = username
+            userGordonPassword = password
+            
             self.view.hidden = true
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
         }
@@ -168,7 +179,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         lblEnterCredentials.text = "Enter your credentials for GoGordon";
         lblEnterCredentials.textColor = UIColor.whiteColor();
         
-        logoutInDB()
+        dbManagement.logoutInDB()
     
         if !segue.sourceViewController.isBeingDismissed() {
        
@@ -180,9 +191,6 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
 
-    
-    
-    
     func performLoginAtServer(){
 
        
@@ -256,7 +264,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         if(httpResponseFromServer == 200 ){
             
-            saveLoginInDB()
+            dbManagement.saveLoginInDB(userGordonName, userGordonPassword: userGordonPassword)
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
             
             //handles the timer if a connection was slow or no responding, meaning to not ask for a new one
@@ -285,129 +293,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         
     }
-    
-    
-    
-    func saveLoginInDB(){
-        
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
-        
 
-        let fetchRequest = NSFetchRequest(entityName: "GordonUser")
-        let predicate = NSPredicate(format: "username==%@", userGordonName!)
-        fetchRequest.predicate = predicate
-        
-        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [GordonUser]{
-            
-            
-            if (fetchResults.count >= 1) {
-                
-                var tablePreferences: String = fetchResults[0].tablePreferences;
-                endPointsFromDB = split(tablePreferences){$0 == ","}
-                var userGordon = fetchResults[0]
-                userGordon.sessionStatus = "in"
-                var saveError: NSError? = nil
-                if !managedContext.save(&saveError){
-                    println("Problems logging in:  \(saveError)")
-                }
-                
-                
-                
-            }
-            
-           else{
-        
-            
-            let userDB = NSEntityDescription.insertNewObjectForEntityForName("GordonUser",
-                inManagedObjectContext: managedContext) as! GordonUser
-            userDB.username = userGordonName!;
-            userDB.password = userGordonPassword!;
-            userDB.sessionStatus = "in";
-            userDB.tablePreferences = "chapelcredits,mealpoints,mealpointsperday,daysleftinsemester,studentid,temperature"
-            endPointsFromDB = split(userDB.tablePreferences){$0 == ","}
-            var error: NSError?
-            if !managedContext.save(&error) {
-                println("Could not save \(error), \(error?.userInfo)")
-            }
-        }
-    }
-    
-    }
-    
-    
-    func checkLoginInDB() -> Bool{
-        
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
-        
-        let fetchRequest = NSFetchRequest(entityName: "GordonUser")
-        let predicate = NSPredicate(format: "sessionStatus==%@", "in")
-        fetchRequest.predicate = predicate
-        var userExists: Bool = false
-        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [GordonUser]{
-            
-            
-            if (fetchResults.count >= 1) {
-                
-  
-                var tablePreferences: String = fetchResults[0].tablePreferences;
-                endPointsFromDB = split(tablePreferences){$0 == ","}
-                userGordonName = fetchResults[0].username
-                userGordonPassword = fetchResults[0].password
-                userExists = true
-                
-            
-            }
-            
-            
-        }
-        return userExists
-        
-    }
-    
-    
-    func logoutInDB(){
-        
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext!
-        
-        let fetchRequest = NSFetchRequest(entityName: "GordonUser")
-        let predicate = NSPredicate(format: "sessionStatus==%@", "in")
-        fetchRequest.predicate = predicate
-        
-        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [GordonUser]{
-            
-            
-            if (fetchResults.count >= 1) {
-                
-                var userGordon = fetchResults[0]
-                userGordon.sessionStatus = "out"
-                userGordon.password = ""
-                var saveError: NSError? = nil
-                if !managedContext.save(&saveError){
-                  println("Problems logging out:  \(saveError)")
-                }
-                
-            }
-            
-            
-        }else{
-            println("Error loading the data")
-        }
-        
-        
-        
-        
-    }
-    
-    
   
     
 
