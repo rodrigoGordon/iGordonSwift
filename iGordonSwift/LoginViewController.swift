@@ -153,6 +153,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
             
         }else {
+            loginAttempted = true
             returnsErrorMessageBadLogin()
         }
         
@@ -194,7 +195,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         
         //url used to connect to the debug server
-        let url: NSURL = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swwift")!;
+        let url: NSURL = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift")!;
         
         let request = NSMutableURLRequest(URL: url);
         
@@ -258,6 +259,9 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
             saveLoginInDB()
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
             
+            //handles the timer if a connection was slow or no responding, meaning to not ask for a new one
+            // performed at the method returnErrodBadLogin
+            loginAttempted = true
         }
         
     }

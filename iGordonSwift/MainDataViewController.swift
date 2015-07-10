@@ -113,7 +113,10 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     override func viewWillAppear(animated: Bool) {
     
         self.navigationItem.hidesBackButton = true;
+        
     
+        
+        
     }
     
     func updateSpecificRowWithNotification(notification: NSNotification)
@@ -125,6 +128,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         var indexPath = NSIndexPath(forRow: find(userTablePreferences,
                                             (keyOfEndPointToBeUpdated as? String)!)!, inSection: 0);
     
+        
+        saveSearchOnDB(endPointsDictionary[userTablePreferences[indexPath.row]]!.name,
+            valueReceivedFromServer: endPointsDictionary[userTablePreferences[indexPath.row]]!.value)
 
         tableViewData?.beginUpdates();
     
@@ -132,12 +138,20 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
         tableViewData?.endUpdates();
         
+        
+        
         var cell = tableViewData.cellForRowAtIndexPath(indexPath)! as! TableViewCellUserDataCustom
         cell.setOptionsForAnimationInResultLabel()
         cell.lblResultFromServer.hidden = false
         cell.imgIconForEndPoint.hidden = true
         cell.setOptionsForAnimationInResultLabel()
         cell.lblResultFromServer.animate()
+        
+        
+        
+        
+        
+        
         
         
     
@@ -160,9 +174,6 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     
     func updateTableAfterChangesAtUserPreferences(notification: NSNotification){
-    
-        
-        
         
         let tempParseFromNotification: Dictionary<String,[String]> =
             (notification.userInfo as? Dictionary<String,[String]>)!;
@@ -254,7 +265,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
   
     }
     
-    func saveSearchOnDB(endPointDescription: String){
+    func saveSearchOnDB(endPointDescription: String, valueReceivedFromServer: String){
         
         let appDelegate =
         UIApplication.sharedApplication().delegate as! AppDelegate
@@ -277,7 +288,8 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
             var logUpdate = fetchResults[0]
             logUpdate.dateOfSearch = NSDate()
-                println(logUpdate.dateOfSearch)
+            logUpdate.valueReceived = valueReceivedFromServer
+                
             var saveError: NSError? = nil
                 
             if !managedContext.save(&saveError){
@@ -292,7 +304,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 logs.idUser = userProfile["username"]!!
                 logs.endPointSearched = endPointDescription
                 logs.dateOfSearch = NSDate()
-                
+                logs.valueReceived = valueReceivedFromServer
                 var error: NSError?
                 if !managedContext.save(&error) {
                     println("Could not save \(error), \(error?.userInfo)")
@@ -309,7 +321,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
     }
     
-    func loadLastSearchFromDB(endPointDescription: String) -> Int{
+    func loadLastSearchFromDB(endPointDescription: String) -> (Int, String?){
         
         let appDelegate =
         UIApplication.sharedApplication().delegate as! AppDelegate
@@ -324,7 +336,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         fetchRequest.predicate = compound
         
         var logReturn: Int = 0
-        
+        var endPointValue: String?
         
         if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
             
@@ -333,6 +345,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 
                 //total in hours that the last logs was recorded
                 let logPeriod = (fetchResults[0].dateOfSearch.timeIntervalSinceNow)/3600
+
+                let value = fetchResults[0].valueReceived
+                endPointValue = value
                 
                 if logPeriod < -10 && logPeriod > -24{
                     logReturn = 1
@@ -352,11 +367,11 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         }
         
         // return 0 if new (.) , 1 if avg(..) , 2 if old ( more than a day )(...)
-        return logReturn
+        return (logReturn,endPointValue)
     }
     
     
-    
+
     
 
     
@@ -407,14 +422,23 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         cell.lblDescriptionOfEndPoint.textColor = UIColor.whiteColor();
         
         cell.lblResultFromServer.textColor = UIColor.whiteColor();
+        
         cell.lblResultFromServer.text = tempEndPoint!.value as String ;
         
         cell.lblLogPeriod.textColor = UIColor.whiteColor()
         
+        let (logPeriod, endPointValue) = loadLastSearchFromDB(tempEndPoint!.name)
         
-        switch loadLastSearchFromDB(tempEndPoint!.name){
+        if let value = endPointValue{
+            cell.lblResultFromServer.text = endPointValue
+            cell.lblResultFromServer.hidden  = false
+            cell.imgIconForEndPoint.hidden = true
+            cell.lblLogPeriod.hidden = false
+        
+        
+        switch logPeriod{
         case 0:
-            cell.lblLogPeriod.text = "."
+            cell.lblLogPeriod.text = ""
             break
         case 1:
             cell.lblLogPeriod.text = ".."
@@ -423,6 +447,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             cell.lblLogPeriod.text = "..."
         }
         
+        }
+        else {
+            cell.imgIconForEndPoint.hidden = false
+            cell.lblResultFromServer.hidden = true
+            cell.lblLogPeriod.hidden = true
+        }
         
         
         
@@ -430,13 +460,21 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         if userTablePreferences.count < 4  {
             
             UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
+                
+                
                 cell.imgIconForEndPoint.center.x = cell.lblDescriptionOfEndPoint.center.x
                 cell.lblResultFromServer.center.x = cell.lblDescriptionOfEndPoint.center.x
                 cell.lblLogPeriod.center.x = cell.lblDescriptionOfEndPoint.center.x
-                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y + cell.lblLogPeriod.frame.size.height + 5
+                
+                //center elements
+                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 15 //the image is 50x50
+                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 15 // the label is 50x50
+                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 30 // differences from the img/lbl plus 5pixels
+                
+                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y + cell.lblLogPeriod.frame.size.height
+                cell.lblResultFromServer.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 35)
                 
                 
-
                 }, completion: nil)
         }else{
             
@@ -444,11 +482,21 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 cell.imgIconForEndPoint.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
                 cell.lblResultFromServer.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
                 cell.lblLogPeriod.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
-                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y - cell.lblLogPeriod.frame.size.height - 5
+                
+               
+                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 15 //the image is 50x50
+                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 15 // the label is 50x50
+                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 25 // differences from the img/lbl plus 5pixels
+                
+                
+                cell.lblDescriptionOfEndPoint.center.y = cell.imgIconForEndPoint.center.y // align with result label or imgIcon
+                cell.lblResultFromServer.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 25)
                 
                 }, completion: nil)
             
         }
+        
+
 
         
         return cell;
@@ -471,10 +519,11 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         cell.lblResultFromServer.hidden = true
         cell.selectedX = cell.imgIconForEndPoint.center.x
         cell.selectedY = cell.imgIconForEndPoint.center.y
+        
         cell.setOptionsForAnimationInIcon()
         cell.imgIconForEndPoint.animate()
         
-        saveSearchOnDB(endPointsDictionary[userTablePreferences[indexPath.row]]!.name)
+        
     }
     
    

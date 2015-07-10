@@ -11,10 +11,11 @@
         <attribute name="dateOfSearch" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="endPointSearched" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idUser" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="valueReceived" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="fkGordonUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GordonUser" inverseName="fkLog" inverseEntity="GordonUser" syncable="YES"/>
     </entity>
     <elements>
         <element name="GordonUser" positionX="-1593" positionY="-1764" width="128" height="120"/>
-        <element name="LogResultsFromServer" positionX="-1593" positionY="-1737" width="128" height="105"/>
+        <element name="LogResultsFromServer" positionX="-1593" positionY="-1737" width="128" height="120"/>
     </elements>
 </model>

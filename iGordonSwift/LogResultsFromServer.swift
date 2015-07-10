@@ -14,4 +14,5 @@ class LogResultsFromServer: NSManagedObject {
     @NSManaged var idUser: String
     @NSManaged var endPointSearched: String
     @NSManaged var dateOfSearch: NSDate
+    @NSManaged var valueReceived: String
 }
