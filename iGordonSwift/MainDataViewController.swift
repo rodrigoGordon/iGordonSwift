@@ -40,7 +40,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
         chapelCreditEndPoint.name = "chapelcredits";
-        chapelCreditEndPoint.cellDescription = "CL&W credits" ;
+        chapelCreditEndPoint.cellDescription = "CL&W CREDITS" ;
         chapelCreditEndPoint.colorRGB = [11/255.0 , 54/255.0 , 112/255.0];
         chapelCreditEndPoint.image = "chapel.png" ;
         
@@ -98,6 +98,8 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTableAfterChangesAtUserPreferences:",
             name: "userPreferencesUpdated", object: nil);
     
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "adjustTableAfterRotation", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        
         
         self.navigationController?.navigationBar.hidden = false;
         
@@ -120,6 +122,14 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
     }
+    
+    
+    func adjustTableAfterRotation(){
+
+        tableViewData.reloadData()
+  
+    }
+    
     
     func updateSpecificRowWithNotification(notification: NSNotification)
     {
@@ -311,7 +321,8 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
         
-        if userTablePreferences.count < 4  {
+        if userTablePreferences.count < 4  && (UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation)
+            || UIDevice.currentDevice().orientation.isFlat){
             
             UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
                 
@@ -321,12 +332,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 cell.lblLogPeriod.center.x = cell.lblDescriptionOfEndPoint.center.x
                 
                 //center elements
-                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 15 //the image is 50x50
-                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 15 // the label is 50x50
-                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 30 // differences from the img/lbl plus 5pixels
+                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 20 //the image is 50x50
+                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 20 // the label is 50x50
+                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 15 // differences from the img/lbl
                 
                 cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y + cell.lblLogPeriod.frame.size.height
-                cell.lblResultFromServer.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 35)
+                cell.lblResultFromServer.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 32)
                 
                 
                 }, completion: nil)
@@ -338,9 +349,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 cell.lblLogPeriod.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
                 
                
-                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 15 //the image is 50x50
-                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 15 // the label is 50x50
-                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 25 // differences from the img/lbl plus 5pixels
+                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 10 //the image is 50x50
+                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 10 // the label is 50x50
+                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 20 // differences from the img/lbl
                 
                 
                 cell.lblDescriptionOfEndPoint.center.y = cell.imgIconForEndPoint.center.y // align with result label or imgIcon
@@ -392,7 +403,19 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath
         indexPath: NSIndexPath) -> CGFloat {
-            return (tableView.frame.size.height / CGFloat(userTablePreferences.count))-10;
+            
+            
+            // UIApplication.sharedApplication().statusBarFrame.height in points according to
+            //http://stackoverflow.com/questions/20687082/how-do-i-make-my-ios7-uitableviewcontroller-not-appear-under-the-top-status-bar
+            
+            
+            
+            if !UIApplication.sharedApplication().statusBarHidden {
+            
+            return (self.view.frame.size.height - (self.navigationController?.navigationBar.frame.height)! - (UIApplication.sharedApplication().statusBarFrame.height)) / CGFloat(userTablePreferences.count);
+            }else{
+                return (self.view.frame.size.height - (self.navigationController?.navigationBar.frame.height)!) / CGFloat(userTablePreferences.count);
+            }
     }
     
 

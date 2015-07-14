@@ -10,6 +10,8 @@ import UIKit
 import XCTest
 import Foundation
 import iGordonSwift
+import CoreData
+
 
 class iGordonSwiftTests: XCTestCase {
     
@@ -68,6 +70,53 @@ class iGordonSwiftTests: XCTestCase {
         
         
     }
+    
+    
+    func testDBForDates() {
+        
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext!
+        
+        
+        let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
+        
+        let resultPredicate1 = NSPredicate(format: "idUser==%@", "iGordon")
+        let resultPredicate2 = NSPredicate(format: "endPointSearched==%@", "chapelcredits")
+        
+        var compound = NSCompoundPredicate.andPredicateWithSubpredicates([resultPredicate1, resultPredicate2])
+        fetchRequest.predicate = compound
+        
+        
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
+            
+            if fetchResults.count >= 1{
+                
+                var logUpdate = fetchResults[0]
+                logUpdate.dateOfSearch = NSDate(timeIntervalSinceNow: -10000000000)
+                logUpdate.valueReceived = "32"
+                
+                var saveError: NSError? = nil
+                
+                if !managedContext.save(&saveError){
+                    println("Problems logging out:  \(saveError)")
+                }
+                println("Data saved")
+                
+            }
+        }
+
+        var mainDataObj: MainDataViewController = MainDataViewController()
+        
+        let (testPeriod, endPointVlaue) = mainDataObj.dbManagement.loadLastSearchFromDB("chapelcredits", userName: "iGordon")
+        
+        XCTAssertEqual(testPeriod, 2, "Variable testPeriod is old enough according to the test")
+        
+        
+        
+    }
+    
     
     
     

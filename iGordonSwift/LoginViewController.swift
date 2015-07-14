@@ -264,7 +264,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         if(httpResponseFromServer == 200 ){
             
-            dbManagement.saveLoginInDB(userGordonName, userGordonPassword: userGordonPassword)
+            endPointsFromDB = dbManagement.saveLoginInDB(userGordonName, userGordonPassword: userGordonPassword)
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
             
             //handles the timer if a connection was slow or no responding, meaning to not ask for a new one

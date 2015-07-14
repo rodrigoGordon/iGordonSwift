@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B019BA01B3C819900BB6C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
 		5B019BA21B3C859400BB6C0F /* GordonUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B019BA11B3C859400BB6C0F /* GordonUser.swift */; };
 		5B019BA31B3C85CE00BB6C0F /* GordonUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B019BA11B3C859400BB6C0F /* GordonUser.swift */; };
 		5B4E25A01B39F6CA009D7477 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C07B1B2896FF005B9DFB /* EndPoint.swift */; };
@@ -76,6 +75,7 @@
 		5BB271C91B43357100CB467B /* TransitionZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271901B43357100CB467B /* TransitionZoom.swift */; };
 		5BB271CA1B43357100CB467B /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271911B43357100CB467B /* UnwindSegue.swift */; };
 		5BB271CB1B43357100CB467B /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271911B43357100CB467B /* UnwindSegue.swift */; };
+		5BF39FF01B5455240034C537 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
 		5BFE01C11B4ACE4100469A47 /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
 		5BFE01C31B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */; };
 		5BFE01C41B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */; };
@@ -519,7 +519,6 @@
 				5BFE01C41B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */,
 				5BB271C31B43357100CB467B /* SpringTextView.swift in Sources */,
 				5BFE01C11B4ACE4100469A47 /* iGordonSwift.xcdatamodeld in Sources */,
-				5B019BA01B3C819900BB6C0F /* AppDelegate.swift in Sources */,
 				5BB271A31B43357100CB467B /* DesignableTextField.swift in Sources */,
 				5BB271A51B43357100CB467B /* DesignableTextView.swift in Sources */,
 				5BB271C91B43357100CB467B /* TransitionZoom.swift in Sources */,
@@ -536,6 +535,7 @@
 				5BB271A11B43357100CB467B /* DesignableTabBarController.swift in Sources */,
 				5BB271971B43357100CB467B /* AutoTextView.swift in Sources */,
 				5BB271CB1B43357100CB467B /* UnwindSegue.swift in Sources */,
+				5BF39FF01B5455240034C537 /* AppDelegate.swift in Sources */,
 				5BB271C51B43357100CB467B /* SpringView.swift in Sources */,
 				5BB271BF1B43357100CB467B /* SpringLabel.swift in Sources */,
 				5B019BA31B3C85CE00BB6C0F /* GordonUser.swift in Sources */,
