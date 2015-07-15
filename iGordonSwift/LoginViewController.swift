@@ -69,7 +69,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
     override func viewWillAppear(animated: Bool) {
         
-        let (userExists, endPointsDBCheckLogin, username, password) = dbManagement.checkLoginInDB()
+        let (userExists, endPointsDBCheckLogin, username, password) = dbManagement.checkUserLoginStatus()
         
         if userExists {
             endPointsFromDB = endPointsDBCheckLogin
@@ -179,7 +179,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         lblEnterCredentials.text = "Enter your credentials for GoGordon";
         lblEnterCredentials.textColor = UIColor.whiteColor();
         
-        dbManagement.logoutInDB()
+        dbManagement.logoutUserSession()
     
         if !segue.sourceViewController.isBeingDismissed() {
        
@@ -211,7 +211,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         request.HTTPMethod = "GET" ;
         urlConnection = NSURLConnection(request: request, delegate: self)!;
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("returnsErrorMessageBadLogin"),
             userInfo: nil, repeats: false)
 
     }
@@ -264,7 +264,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         
         if(httpResponseFromServer == 200 ){
             
-            endPointsFromDB = dbManagement.saveLoginInDB(userGordonName, userGordonPassword: userGordonPassword)
+            endPointsFromDB = dbManagement.saveLoginGetPreferences(userGordonName, userGordonPassword: userGordonPassword)
             self.performSegueWithIdentifier("goMainDataTableView", sender: mainDataViewController);
             
             //handles the timer if a connection was slow or no responding, meaning to not ask for a new one

@@ -2,11 +2,16 @@
 //  DatabaseManagement.swift
 //  iGordonSwift
 //
-//  The class will be used for management of any class and its respective data in the App that
-//  needs to use CoreData, such as: MainDataViewController, LoginViewController.
-//  
-//  The operations are based on CREATE, READ, UPDATE, DELETE in sqlLite and Xcode, with two entities:
-//  GordonUser and LogResultsFromServer
+//  DatabaseManagement provides stable on-device storage and some associated "business logic" for the
+//  following entities:
+//      GordonUser - Stores username and preferences for each user who has logged in from this device.
+//          Stores password at login, and deletes password on logout.
+//          Retrieves credentials for currently logged-in user.
+//      LogResultsFromServer - for each user, stores and retrieves the value and last-update-time
+//          for each item listed in their preferences.
+//
+//  (This class is used primarily by MainDataViewController, LoginViewController to manage their respective data.
+//  Any other classes with similar data to manage should extend this class to do so.)
 //
 //  Created by Rodrigo on 7/10/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
@@ -23,14 +28,23 @@ class DatabaseManagement: NSObject {
     
     // LOGIN MANAGEMENT
     
-    
-    
-    //method creates or updates a login in the database, when the login button is pressed on LoginViewController
-    func saveLoginInDB(userGordonName: String?, userGordonPassword: String?) -> [String]{
+    // Stores username and password (over-writing any old password for this user), and
+    // returns the user's preferences.  If the user doesn't have stored preferences,
+    // default preferences are generated, stored, and returned.  Existing preferences
+    // are not modified.  Usernames should be validated (by logging into the server)
+    // before being used as arguments.
+    //
+    // Arguments:
+    //   userGordonName - username (typically first.last), without "@gordon.edu"
+    //   userGordonPassword - base64 encoded password for this user
+    // Returns:
+    //   The user's preferences, as an array of strings identifying values to display.
+    //   If userGordonName is invalid (nil or empty string), then an empty array will be
+    //   returned.
+
+    func saveLoginGetPreferences(userGordonName: String?, userGordonPassword: String?) -> [String]{
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
         var endPointsFromDB: [String] = []
@@ -54,12 +68,13 @@ class DatabaseManagement: NSObject {
                 
                 // assigns "in", for the sign in process
                 userGordon.sessionStatus = "in"
+                userGordon.password = userGordonPassword!
                 var saveError: NSError? = nil
                 if !managedContext.save(&saveError){
                     println("Problems logging in:  \(saveError)")
                 }
                 
-                
+                // TODO: save password (in case they just logged back in or changed password)
                 
             }
                 
@@ -73,7 +88,8 @@ class DatabaseManagement: NSObject {
                 userDB.username = userGordonName!;
                 userDB.password = userGordonPassword!;
                 userDB.sessionStatus = "in";
-                userDB.tablePreferences = "chapelcredits,mealpoints,mealpointsperday,daysleftinsemester,studentid,temperature"
+                userDB.tablePreferences =
+                "chapelcredits,mealpoints,mealpointsperday,daysleftinsemester,studentid,temperature"
                 endPointsFromDB = split(userDB.tablePreferences){$0 == ","}
                 var error: NSError?
                 if !managedContext.save(&error) {
@@ -88,13 +104,22 @@ class DatabaseManagement: NSObject {
     
     
     
-    //Makes a search in the DB in the ViewWillAppear method in LoginViewController, to see if there's still a user logged in,
-    //valid for the case that the app is not in the memory anymore
-    func checkLoginInDB() -> (Bool, [String],String, String){
+    // Performs a search in the database - specifically in the entity GordonUser, for a user with sessionStatus = "in", if
+    // found returns the following:
+    //
+    //Returns:
+    //   UserExists - Bool, simply a true/false that tells if the search found any user logged in, which is defined by the field
+    //      sessionStatus("in" or "out") in the GordonUser entity.
+    //   endPointsFromDB - Array of Strings, which corresponds to the user preferences in the DB.
+    //   username - The String representation of username for use in the authentication process with Gordon server.
+    //   password - The String base64 encoded representation of password also used for authentication with Gordon server.
+    
+    // In the case of no user found logged in, the userExists will be FALSE and SHOULD be used as a validation parameter, for
+    // no attempts to use the other return values such as endPointsFromDB and userGordonName, which will be empty.
+    
+    func checkUserLoginStatus() -> (Bool, [String],String, String){
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
         
@@ -132,14 +157,15 @@ class DatabaseManagement: NSObject {
         
     }
     
-    
-    
-    // Makes a search in the DB for the user and set its sessionStatus to out
-    func logoutInDB(){
+    // Finds the user that is logged in then set its sessionStatus to "out", Then
+    // sets for security its password to nil, in case the app is not in the user's phone,
+    // but in a friend's one for example.
+    // The method is supposed to be called inside a function that is inside the scope of
+    // a "session", so it will always find a user to logout. Such as: from a popover inside
+    // a main view.
+    func logoutUserSession(){
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
         let fetchRequest = NSFetchRequest(entityName: "GordonUser")
@@ -173,18 +199,21 @@ class DatabaseManagement: NSObject {
     
     
     // SEARCH ON SERVER MANAGEMENT
-
     
     
+    //Given a determined user, the method performs an update in the field userTablePreferences in the table GordonUser
     
+    //Parameter:
+    //   Array of Strings: userTablePreferences - Contains each of the endpoints names, count and order, edited by 
+    //the user. It's saved as a String in GordonUser, separated by commas.
     
-    //Method called every time the user update its preferences in the Left Popover menu in the MainDataViewController
-    func updateUserPreferencesInDB(userTablePreferences: [String]){
+    // In case of a null parameter or a user that passes an empty array, there's no exception but a complete table 
+    // preferences saved instead.
+    
+    func updateUserTablePreferences(userTablePreferences: [String]){
         
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
         let fetchRequest = NSFetchRequest(entityName: "GordonUser")
@@ -223,12 +252,21 @@ class DatabaseManagement: NSObject {
     }
     
     
-    //Method called when the user selects a cell in the tableView in the MainDataViewController
-    func saveSearchOnDB(endPointDescription: String, valueReceivedFromServer: String, userName: String){
+    //For the control of the "age" of the information, the following mothod is defined as:
+    //Arguments:
+    //    endPointDescription  - Receives the name of the endpoint; i.e: "chapelcredits"
+    //    valueReceivedFromServer - In the range of endpoints it can a value like 32 for chapelcredits,
+    //      to make easier the presentation, all the values were formatted to String, however the Server
+    //      can return a Int or Double.
+    //    userName - Username for the specific association with its respective endpoint, since the app can
+    //        have multiple users
+    // Basic operation: A new log is created if there's no result from the search, if yes, the valueReceivedFromServer
+    //        is updated and so it is the dataSearched, used to validate how old is the information, mostly used in the 
+    //        method loadLastEndPointSearch
+    
+    func saveEndPointSearch(endPointDescription: String, valueReceivedFromServer: String, userName: String){
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
         
@@ -284,13 +322,22 @@ class DatabaseManagement: NSObject {
     }
     
     
-    //Method used mostly to idenfity how old the information about the endpoints is and also return 
-    //its respective value
-    func loadLastSearchFromDB(endPointDescription: String, userName: String) -> (Int, String?){
+    // Main Function: Makes a individual search for an endpointname and its owner(username), if found,
+    //  compares the current date with the endpoint date of save in the database, then decides how old
+    //  the information is.
+    // Arguments:
+    //   endPointDescription  - Receives the name of the endpoint; i.e: "chapelcredits"
+    //    userName - Username for the specific association with its respective endpoint, since the app can
+    //        have multiple users
+    // Returns:
+    // logPeriod: Int - Returns a value between 0 .. 2 , for 0(less than 10 hours since last search), 1(between
+    //  10 and 24 hours), 2 for more than 24 hours.
+    // logValue: String? - Returns the last value searched and recorded for that respective endpoint.
+
+    
+    func loadLastEndPointSearch(endPointDescription: String, userName: String) -> (Int, String?){
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
         let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
@@ -336,10 +383,10 @@ class DatabaseManagement: NSObject {
     }
     
     
-
-
     
     
     
-   
+    
+    
+    
 }

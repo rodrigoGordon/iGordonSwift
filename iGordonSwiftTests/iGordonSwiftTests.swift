@@ -109,7 +109,7 @@ class iGordonSwiftTests: XCTestCase {
 
         var mainDataObj: MainDataViewController = MainDataViewController()
         
-        let (testPeriod, endPointVlaue) = mainDataObj.dbManagement.loadLastSearchFromDB("chapelcredits", userName: "iGordon")
+        let (testPeriod, endPointVlaue) = mainDataObj.dbManagement.loadLastEndPointSearch("chapelcredits", userName: "iGordon")
         
         XCTAssertEqual(testPeriod, 2, "Variable testPeriod is old enough according to the test")
         

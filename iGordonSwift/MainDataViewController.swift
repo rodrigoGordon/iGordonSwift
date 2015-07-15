@@ -143,7 +143,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         
         
-        dbManagement.saveSearchOnDB(endPointsDictionary[userTablePreferences[indexPath.row]]!.name, valueReceivedFromServer: endPointsDictionary[userTablePreferences[indexPath.row]]!.value, userName: userProfile["username"]!!)
+        dbManagement.saveEndPointSearch(endPointsDictionary[userTablePreferences[indexPath.row]]!.name, valueReceivedFromServer: endPointsDictionary[userTablePreferences[indexPath.row]]!.value, userName: userProfile["username"]!!)
         
 
         tableViewData?.beginUpdates();
@@ -176,7 +176,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
      
             tableViewData?.setEditing(false, animated: false);
             
-            dbManagement.updateUserPreferencesInDB(userTablePreferences)
+            dbManagement.updateUserTablePreferences(userTablePreferences)
             
     
         }
@@ -232,7 +232,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         tableViewData.reloadData()
         
         
-        dbManagement.updateUserPreferencesInDB(userTablePreferences)
+        dbManagement.updateUserTablePreferences(userTablePreferences)
 
     }
 
@@ -290,7 +290,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         cell.lblLogPeriod.textColor = UIColor.whiteColor()
         
         
-        let (logPeriod, endPointValue) = dbManagement.loadLastSearchFromDB(tempEndPoint!.name, userName: userProfile["username"]!!)
+        let (logPeriod, endPointValue) = dbManagement.loadLastEndPointSearch(tempEndPoint!.name, userName: userProfile["username"]!!)
         
         
         if let value = endPointValue{
@@ -334,9 +334,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 //center elements
                 cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 20 //the image is 50x50
                 cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 20 // the label is 50x50
-                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 15 // differences from the img/lbl
+                cell.lblLogPeriod.center.y = cell.lblResultFromServer.center.y + 20 // differences from the img/lbl
                 
-                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y + cell.lblLogPeriod.frame.size.height
+                cell.lblDescriptionOfEndPoint.center.y = cell.lblLogPeriod.center.y + cell.lblLogPeriod.frame.size.height + 10
                 cell.lblResultFromServer.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 32)
                 
                 
@@ -351,7 +351,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                
                 cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 10 //the image is 50x50
                 cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 10 // the label is 50x50
-                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 20 // differences from the img/lbl
+                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 5 // differences from the img/lbl
                 
                 
                 cell.lblDescriptionOfEndPoint.center.y = cell.imgIconForEndPoint.center.y // align with result label or imgIcon
