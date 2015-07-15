@@ -326,12 +326,14 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             
             UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
                 
+                //center elements X
+                cell.imgIconForEndPoint.center.x = (cell.frame.size.width / 2)
+                cell.lblResultFromServer.center.x = (cell.frame.size.width / 2)
+                cell.lblLogPeriod.center.x = (cell.frame.size.width / 2)
+                cell.lblDescriptionOfEndPoint.center.x = (cell.frame.size.width / 2)
                 
-                cell.imgIconForEndPoint.center.x = cell.lblDescriptionOfEndPoint.center.x
-                cell.lblResultFromServer.center.x = cell.lblDescriptionOfEndPoint.center.x
-                cell.lblLogPeriod.center.x = cell.lblDescriptionOfEndPoint.center.x
                 
-                //center elements
+                //center elements Y
                 cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 20 //the image is 50x50
                 cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 20 // the label is 50x50
                 cell.lblLogPeriod.center.y = cell.lblResultFromServer.center.y + 20 // differences from the img/lbl
@@ -344,10 +346,11 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         }else{
             
             UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: {
-                cell.imgIconForEndPoint.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
-                cell.lblResultFromServer.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
-                cell.lblLogPeriod.center.x = (cell.lblDescriptionOfEndPoint.center.x / 2) - 10
                 
+                cell.imgIconForEndPoint.center.x = 45
+                cell.lblResultFromServer.center.x = 45
+                cell.lblLogPeriod.center.x = 45
+                cell.lblDescriptionOfEndPoint.center.x = (cell.frame.size.width / 2)+10
                
                 cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 10 //the image is 50x50
                 cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 10 // the label is 50x50
