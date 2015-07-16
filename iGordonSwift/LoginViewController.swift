@@ -179,7 +179,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
         lblEnterCredentials.text = "Enter your credentials for GoGordon";
         lblEnterCredentials.textColor = UIColor.whiteColor();
         
-        dbManagement.logoutUserSession()
+        dbManagement.logoutUserDeletePassword()
     
         if !segue.sourceViewController.isBeingDismissed() {
        

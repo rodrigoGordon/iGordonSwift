@@ -26,7 +26,11 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     var dbManagement: DatabaseManagement = DatabaseManagement();
     
-
+    //added for longgesturerecognizer
+    var sourceIndexPath: NSIndexPath? = nil
+    var snapshot: UIView? = nil
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -111,6 +115,15 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         let identifier = "tableCellDesignUserDataOptions";
         // IT"S mandatory to register a NIB
         tableViewData.registerNib(UINib(nibName: "tableCellDesignForUserDataOptions", bundle: nil), forCellReuseIdentifier: identifier);
+        
+        
+        var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
+        
+        gesture.minimumPressDuration = 1.0
+        
+        self.view.addGestureRecognizer(gesture)
+        
+        
         
     }
     
@@ -236,17 +249,76 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
     }
 
+    /*
+   func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+        // 1
+        var shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Share" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            // 2
+            let shareMenu = UIAlertController(title: nil, message: "Share using", preferredStyle: .ActionSheet)
+            
+            let twitterAction = UIAlertAction(title: "Twitter", style: UIAlertActionStyle.Default, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+            
+            shareMenu.addAction(twitterAction)
+            shareMenu.addAction(cancelAction)
+            
+            
+            self.presentViewController(shareMenu, animated: true, completion: nil)
+        })
+        // 3
+        var rateAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Rate" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            // 4
+            let rateMenu = UIAlertController(title: nil, message: "Rate this App", preferredStyle: .ActionSheet)
+            
+            let appRateAction = UIAlertAction(title: "Rate", style: UIAlertActionStyle.Default, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+            
+            rateMenu.addAction(appRateAction)
+            rateMenu.addAction(cancelAction)
+            
+            
+            self.presentViewController(rateMenu, animated: true, completion: nil)
+        })
+        // 5
+        return [shareAction,rateAction]
+    }
+    */
+    
+
+    
+
+    // Override to support editing the table view.
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete  {
+            // Delete the row from the data source
+            userTablePreferences.removeAtIndex(indexPath.row) ;
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.reloadData()
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true ;
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.None ;
-    }
+    //func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+    //    return UITableViewCellEditingStyle.Delete ;
+   // }
     
     func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false;
+        return true;
     }
     
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -395,13 +467,113 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     }
     
    
-    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    //func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         
-        let objectToBeMoved = userTablePreferences[sourceIndexPath.row] ;
-        userTablePreferences.removeAtIndex(sourceIndexPath.row);
-        self.userTablePreferences.insert(objectToBeMoved, atIndex: destinationIndexPath.row);
+        //let objectToBeMoved = userTablePreferences[sourceIndexPath.row] ;
+        //userTablePreferences.removeAtIndex(sourceIndexPath.row);
+        //self.userTablePreferences.insert(objectToBeMoved, atIndex: destinationIndexPath.row);
         
+        
+    //}
+    
+    
+    func longPressGestureRecognized(gesture: UILongPressGestureRecognizer) {
+        let state: UIGestureRecognizerState = gesture.state;
+        let location: CGPoint = gesture.locationInView(tableViewData)
+        let indexPath: NSIndexPath? = tableViewData.indexPathForRowAtPoint(location)
+        if indexPath == nil {
+            return
+        }
+        
+        switch (state) {
+            
+        case UIGestureRecognizerState.Began:
+            sourceIndexPath = indexPath;
+            let cell = tableViewData.cellForRowAtIndexPath(indexPath!)!
+            snapshot = customSnapshotFromView(cell)
+            
+            var center = cell.center
+            snapshot?.center = center
+            snapshot?.alpha = 0.0
+            tableViewData.addSubview(snapshot!)
+            
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                center.y = location.y
+                self.snapshot?.center = center
+                self.snapshot?.transform = CGAffineTransformMakeScale(1.05, 1.05)
+                self.snapshot?.alpha = 0.98
+                cell.alpha = 0.0
+            })
+            
+        case UIGestureRecognizerState.Changed:
+            var center: CGPoint = snapshot!.center
+            center.y = location.y
+            snapshot?.center = center
+            
+            // Is destination valid and is it different from source?
+            if indexPath != sourceIndexPath {
+                // ... update data source.
+                //userTablePreferences.exchangeObjectAtIndex(indexPath!.row, withObjectAtIndex: sourceIndexPath!.row)
+                let objectToBeMoved = userTablePreferences[sourceIndexPath!.row] ;
+                userTablePreferences.removeAtIndex(sourceIndexPath!.row);
+                self.userTablePreferences.insert(objectToBeMoved, atIndex: indexPath!.row);
+                dbManagement.updateUserTablePreferences(userTablePreferences)
+                // ... move the rows.
+                tableViewData.moveRowAtIndexPath(sourceIndexPath!, toIndexPath: indexPath!)
+                // ... and update source so it is in sync with UI changes.
+                sourceIndexPath = indexPath;
+            }
+            
+        default:
+            // Clean up.
+            let cell = tableViewData.cellForRowAtIndexPath(indexPath!)!
+            cell.alpha = 0.0
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                self.snapshot?.center = cell.center
+                self.snapshot?.transform = CGAffineTransformIdentity
+                self.snapshot?.alpha = 0.0
+                // Undo fade out.
+                cell.alpha = 1.0
+                
+                }, completion: { (finished) in
+                    
+                    self.sourceIndexPath = nil
+                    self.snapshot?.removeFromSuperview()
+                    self.snapshot = nil;
+            })
+            break
+        }
     }
+    
+    // MARK: Helper
+    
+    func customSnapshotFromView(inputView: UIView) -> UIView {
+        
+        // Make an image from the input view.
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
+        inputView.layer.renderInContext(UIGraphicsGetCurrentContext())
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        
+        // Create an image view.
+        let snapshot = UIImageView(image: image)
+        snapshot.layer.masksToBounds = false
+        snapshot.layer.cornerRadius = 0.0
+        snapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        snapshot.layer.shadowRadius = 5.0
+        snapshot.layer.shadowOpacity = 0.4
+        
+        return snapshot
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath
