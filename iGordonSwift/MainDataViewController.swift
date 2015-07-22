@@ -19,10 +19,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     var userProfile: Dictionary<String,String?> = Dictionary(), endPointsDictionary: Dictionary<String,EndPoint> = Dictionary();
     
-
     var userTablePreferences: [String] = Array()
-    
-    var btnShowAddOption: UIBarButtonItem = UIBarButtonItem(), btnReorder: UIBarButtonItem = UIBarButtonItem();
     
     var dbManagement: DatabaseManagement = DatabaseManagement();
     
@@ -34,11 +31,6 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        btnShowAddOption = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "btnShowPopoverAddRemove:");
-        btnReorder = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Organize , target: self, action: "activateReorder");
-    
-        self.navigationItem.setLeftBarButtonItems([btnShowAddOption, btnReorder], animated: true);
         
         var chapelCreditEndPoint = EndPoint();
         
@@ -109,17 +101,14 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         //used to make the table get closer to the navigation bar
         self.automaticallyAdjustsScrollViewInsets = false;
-
+               
         
         
-        let identifier = "tableCellDesignUserDataOptions";
-        // IT"S mandatory to register a NIB
-        tableViewData.registerNib(UINib(nibName: "tableCellDesignForUserDataOptions", bundle: nil), forCellReuseIdentifier: identifier);
         
         
         var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
         
-        gesture.minimumPressDuration = 1.0
+        gesture.minimumPressDuration = 0.2
         
         self.view.addGestureRecognizer(gesture)
         
@@ -130,10 +119,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     override func viewWillAppear(animated: Bool) {
     
         self.navigationItem.hidesBackButton = true;
-        
-    
-        
-        
+  
     }
     
     
@@ -178,23 +164,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
   
     
     }
-    
-    func activateReorder(){
-        
-        if(tableViewData?.editing == false){
-     
-            tableViewData?.setEditing(true, animated: true);
-    
-        }else{
-     
-            tableViewData?.setEditing(false, animated: false);
-            
-            dbManagement.updateUserTablePreferences(userTablePreferences)
-            
-    
-        }
-        
-    }
+
     
     
     func updateTableAfterChangesAtUserPreferences(notification: NSNotification){
@@ -249,40 +219,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
 
     }
 
-    /*
-   func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-        // 1
-        var shareAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Share" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            // 2
-            let shareMenu = UIAlertController(title: nil, message: "Share using", preferredStyle: .ActionSheet)
-            
-            let twitterAction = UIAlertAction(title: "Twitter", style: UIAlertActionStyle.Default, handler: nil)
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
-            
-            shareMenu.addAction(twitterAction)
-            shareMenu.addAction(cancelAction)
-            
-            
-            self.presentViewController(shareMenu, animated: true, completion: nil)
-        })
-        // 3
-        var rateAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Rate" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            // 4
-            let rateMenu = UIAlertController(title: nil, message: "Rate this App", preferredStyle: .ActionSheet)
-            
-            let appRateAction = UIAlertAction(title: "Rate", style: UIAlertActionStyle.Default, handler: nil)
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
-            
-            rateMenu.addAction(appRateAction)
-            rateMenu.addAction(cancelAction)
-            
-            
-            self.presentViewController(rateMenu, animated: true, completion: nil)
-        })
-        // 5
-        return [shareAction,rateAction]
-    }
-    */
+
     
 
     
@@ -313,12 +250,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         return true ;
     }
     
-    //func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-    //    return UITableViewCellEditingStyle.Delete ;
-   // }
     
     func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true;
+        return false;
     }
     
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -335,8 +269,10 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
     
-        let identifier = "tableCellDesignUserDataOptions";
 
+        let identifier = "tableCellDesignUserDataOptions";
+        // IT"S mandatory to register a NIB
+        tableView.registerNib(UINib(nibName: "tableCellDesignForUserDataOptions", bundle: nil), forCellReuseIdentifier: identifier);
         
         var cell: TableViewCellUserDataCustom = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! TableViewCellUserDataCustom;
         
@@ -424,9 +360,9 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 cell.lblLogPeriod.center.x = 45
                 cell.lblDescriptionOfEndPoint.center.x = (cell.frame.size.width / 2)+10
                
-                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) - 10 //the image is 50x50
-                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2) - 10 // the label is 50x50
-                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 5 // differences from the img/lbl
+                cell.imgIconForEndPoint.center.y = (cell.frame.size.height / 2) //- 10 //the image is 50x50
+                cell.lblResultFromServer.center.y = (cell.frame.size.height / 2)// - 10 // the label is 50x50
+                cell.lblLogPeriod.center.y = (cell.frame.size.height / 2) + 15 // differences from the img/lbl
                 
                 
                 cell.lblDescriptionOfEndPoint.center.y = cell.imgIconForEndPoint.center.y // align with result label or imgIcon
@@ -467,17 +403,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     }
     
    
-    //func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        
-        //let objectToBeMoved = userTablePreferences[sourceIndexPath.row] ;
-        //userTablePreferences.removeAtIndex(sourceIndexPath.row);
-        //self.userTablePreferences.insert(objectToBeMoved, atIndex: destinationIndexPath.row);
-        
-        
-    //}
+
     
+    //Example found at https://github.com/moayes/Cities
     
     func longPressGestureRecognized(gesture: UILongPressGestureRecognizer) {
+
         let state: UIGestureRecognizerState = gesture.state;
         let location: CGPoint = gesture.locationInView(tableViewData)
         let indexPath: NSIndexPath? = tableViewData.indexPathForRowAtPoint(location)
@@ -489,6 +420,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             
         case UIGestureRecognizerState.Began:
             sourceIndexPath = indexPath;
+            
             let cell = tableViewData.cellForRowAtIndexPath(indexPath!)!
             snapshot = customSnapshotFromView(cell)
             
@@ -514,10 +446,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             if indexPath != sourceIndexPath {
                 // ... update data source.
                 //userTablePreferences.exchangeObjectAtIndex(indexPath!.row, withObjectAtIndex: sourceIndexPath!.row)
+                
                 let objectToBeMoved = userTablePreferences[sourceIndexPath!.row] ;
                 userTablePreferences.removeAtIndex(sourceIndexPath!.row);
                 self.userTablePreferences.insert(objectToBeMoved, atIndex: indexPath!.row);
                 dbManagement.updateUserTablePreferences(userTablePreferences)
+                
                 // ... move the rows.
                 tableViewData.moveRowAtIndexPath(sourceIndexPath!, toIndexPath: indexPath!)
                 // ... and update source so it is in sync with UI changes.
@@ -543,6 +477,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
             })
             break
         }
+       
     }
     
     // MARK: Helper
@@ -625,7 +560,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
                 
                 var popPC: UIPopoverPresentationController = destNav.popoverPresentationController!;
                 
-                popPC.barButtonItem = self.btnShowAddOption;
+                
                 popPC.sourceRect = CGRectMake(270, 15, 5, 10);
                 
                 popPC.delegate = self;
@@ -647,12 +582,12 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     }
     
-    @IBAction func btnShowPopoverAddRemove (sender: UIBarButtonItem){
+    @IBAction func btnShowPopoverAddRemove(sender: UIBarButtonItem) {
         
         self.performSegueWithIdentifier("showAddOptions", sender: self);
-    
+        
     }
-    
+
     //dismiss the popover before updating the table
     @IBAction func dismissFromAddPopover (segue: UIStoryboardSegue) {
     

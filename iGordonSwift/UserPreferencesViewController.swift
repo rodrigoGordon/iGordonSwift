@@ -26,17 +26,7 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
         
         
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        
-        if(userSelectedOptions.count >= 1){
-        NSNotificationCenter.defaultCenter().postNotificationName("userPreferencesUpdated", object: self, userInfo: ["userPreferences": userSelectedOptions]);
-        }
- 
-    }
-    
-    
-    
+
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
         var presentationLabelForEndPoints: Array<String> = ["CL & W Credit",
@@ -45,20 +35,14 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
         "Days left in the semester",
         "Student ID",
         "Temperature"];
-        
-        
-        
+
         var cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell");
         
         cell.textLabel!.text = presentationLabelForEndPoints[indexPath.row];
-      
-        
-        
-        
+
         if contains(userSelectedOptions, allUserOptions[indexPath.row]){
             
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark ;
-            
             
         }
         
@@ -80,6 +64,7 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
             
         }
         else {
+            
             cell.accessoryType = UITableViewCellAccessoryType.None;
             
             userSelectedOptions.removeAtIndex(find(userSelectedOptions, allUserOptions[indexPath.row])!);
@@ -88,6 +73,9 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true) ;
         
+        if(userSelectedOptions.count >= 1){
+            NSNotificationCenter.defaultCenter().postNotificationName("userPreferencesUpdated", object: self, userInfo: ["userPreferences": userSelectedOptions]);
+        }
         
         
     }

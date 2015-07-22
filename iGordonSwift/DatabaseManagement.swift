@@ -114,8 +114,7 @@ class DatabaseManagement: NSObject {
     //   username - The String representation of username for use in the authentication process with Gordon server.
     //   password - The String base64 encoded representation of password also used for authentication with Gordon server.
     
-    // In the case of no user found logged in, the userExists will be FALSE and SHOULD be used as a validation parameter, for
-    // FIX ENGLISH!// no attempts to use the other return values such as endPointsFromDB and userGordonName, which will be empty.
+    // In the case of no user found logged in, the userExists will be FALSE and SHOULD be used as a validation parameter, because the other parameters will be NIL.
     
     func checkUserLoginStatus() -> (Bool, [String],String, String){
         
@@ -255,17 +254,16 @@ class DatabaseManagement: NSObject {
         
     }
     
-    //REDO FIRST SENTENCE
-    //For the control of the "age" of the information, the following mothod is defined as:
-    //Arguments:
+    // Given the set of parameters, it creates a new log if there's no result from the a search of it, if found it,
+    //    the valueReceivedFromServer is updated and so it is the dataSearched, used to validate how old is the 
+    //    information, mostly used in the method loadLastEndPointSearch
+    // Arguments:
     //    endPointDescription  - Receives the name of the endpoint; i.e: "chapelcredits"
     //    valueReceivedFromServer - String that represents the current value for that endpoint that comes from the server,
     //      i.e: "32" (for chapelcredits).
     //    userName - Username for the specific association with its respective endpoint, since the app can
     //        have multiple users
-    // Basic operation: A new log is created if there's no result from the search, if yes, the valueReceivedFromServer
-    //        is updated and so it is the dataSearched, used to validate how old is the information, mostly used in the 
-    //        method loadLastEndPointSearch
+    
     
     func saveEndPointSearch(endPointDescription: String, valueReceivedFromServer: String, userName: String){
         
@@ -387,7 +385,64 @@ class DatabaseManagement: NSObject {
     
     
     
-    
+    func testMethodForTestTarget(endPointDescription: String, userName: String, managedContext : NSManagedObjectContext) -> (Int, String?){
+        
+        
+        /*
+        let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])!
+        let persistenStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        persistenStoreCoordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil, error: nil)
+        
+        let managedContext = NSManagedObjectContext()
+        managedContext.persistentStoreCoordinator = persistenStoreCoordinator
+        */
+        
+        //let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        //let managedContext = appDelegate.managedObjectContext!
+        
+        let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
+        let resultPredicate1 = NSPredicate(format: "idUser==%@", userName)
+        let resultPredicate2 = NSPredicate(format: "endPointSearched==%@", endPointDescription)
+        
+        var compound = NSCompoundPredicate.andPredicateWithSubpredicates([resultPredicate1, resultPredicate2])
+        fetchRequest.predicate = compound
+        
+        var logReturn: Int = 0
+        var endPointValue: String?
+        
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
+            
+            
+            if (fetchResults.count >= 1) {
+                
+                //total in hours that the last logs was recorded
+                let logPeriod = (fetchResults[0].dateOfSearch.timeIntervalSinceNow)/3600
+                
+                let value = fetchResults[0].valueReceived
+                endPointValue = value
+                
+                if logPeriod < -10 && logPeriod > -24{
+                    logReturn = 1
+                }else if logPeriod < -24{
+                    logReturn = 2
+                }
+                
+                
+                
+            }else {
+                logReturn = 2
+            }
+            
+            
+        }else{
+            println("Error trying to retrieve the logs")
+        }
+        
+        // return 0 if new(less than 10 hours) (.) , 1 if avg(..) , 2 if old ( more than a day )(...)
+        return (logReturn,endPointValue)
+        
+        
+    }
     
     
     

@@ -20,6 +20,7 @@ class iGordonSwiftTests: XCTestCase {
     var userPreferencesObj: UserPreferencesViewController!
     var userOptionsObj: UserOptionsMenuPopover!
     var endPointObj: EndPoint!
+    var tableViewCellCustom: TableViewCellUserDataCustom!
 
     override func setUp() {
         super.setUp()
@@ -28,6 +29,7 @@ class iGordonSwiftTests: XCTestCase {
         self.userPreferencesObj = UserPreferencesViewController()
         self.userOptionsObj = UserOptionsMenuPopover()
         self.endPointObj = EndPoint()
+        self.tableViewCellCustom = TableViewCellUserDataCustom()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -65,8 +67,7 @@ class iGordonSwiftTests: XCTestCase {
         //MainDataViewController variables
         XCTAssertTrue(maindDataObj.userProfile.isEmpty, "userProfile is not empty!!")
         XCTAssertNotNil(maindDataObj.endPointsDictionary, "endpoints dictionary is nil")
-        XCTAssertNotNil(maindDataObj.btnReorder, "btnReorder is nil")
-        XCTAssertNotNil(maindDataObj.btnShowAddOption, "btnShowAddOption is nil")
+        
         
         
     }
@@ -74,12 +75,19 @@ class iGordonSwiftTests: XCTestCase {
     
     func testDBForDates() {
         
-        let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
         
-        let managedContext = appDelegate.managedObjectContext!
+       
         
+        //testing code from andrewcbancroft.com/2015/01/13/unit-testing-model-layer-core-data-swift
         
+        let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])!
+        let persistenStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        
+        persistenStoreCoordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil, error: nil)
+        
+        let managedObjectContext = NSManagedObjectContext()
+        managedObjectContext.persistentStoreCoordinator = persistenStoreCoordinator
+        /*
         let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
         
         let resultPredicate1 = NSPredicate(format: "idUser==%@", "iGordon")
@@ -89,7 +97,7 @@ class iGordonSwiftTests: XCTestCase {
         fetchRequest.predicate = compound
         
         
-        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
+        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
             
             if fetchResults.count >= 1{
                 
@@ -99,22 +107,51 @@ class iGordonSwiftTests: XCTestCase {
                 
                 var saveError: NSError? = nil
                 
-                if !managedContext.save(&saveError){
+                if !managedObjectContext.save(&saveError){
                     println("Problems logging out:  \(saveError)")
                 }
                 println("Data saved")
                 
-            }
+            }else{
+                //creates a new entry in the table, since there's no result from the DB
+                */
+               // var logs = NSEntityDescription.insertNewObjectForEntityForName("LogResultsFromServer",
+                 //   inManagedObjectContext: managedObjectContext) as! LogResultsFromServer
+                
+        
+                var logs: AnyObject = NSEntityDescription.insertNewObjectForEntityForName("LogResultsFromServer",
+                    inManagedObjectContext: managedObjectContext)
+        println(logs.description)
+        
+        if let test = logs as? LogResultsFromServer{
+            println("CAST WORKS!!!")
         }
+        
+                /*
+                logs.idUser = "iGordon"
+                logs.endPointSearched = "chapelcredits"
+                logs.dateOfSearch = NSDate(timeIntervalSinceNow: -10000000000)
+                logs.valueReceived = "32"
+                */
+                var error: NSError?
+                if !managedObjectContext.save(&error) {
+                    println("Could not save \(error), \(error?.userInfo)")
+                }else{
+                    println("Log created in the DB")
+                }
+                
+            //}
+        //}
 
-        var mainDataObj: MainDataViewController = MainDataViewController()
-        
-        let (testPeriod, endPointVlaue) = mainDataObj.dbManagement.loadLastEndPointSearch("chapelcredits", userName: "iGordon")
-        
+        //let testPeriod = 2
+        let dbManagement: DatabaseManagement = DatabaseManagement()
+        let (testPeriod, endPointValue) = dbManagement.testMethodForTestTarget("chapelcredits", userName: "iGordon", managedContext: managedObjectContext)
+        println("**********************")
+        println(testPeriod)
+        println(endPointValue)
+        println("**********************")
         XCTAssertEqual(testPeriod, 2, "Variable testPeriod is old enough according to the test")
-        
-        
-        
+ 
     }
     
     
@@ -125,7 +162,7 @@ class iGordonSwiftTests: XCTestCase {
         // This is an example of a functional test case.
         XCTAssert(true, "Pass")
     }
-    
+    /*
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {
@@ -133,5 +170,6 @@ class iGordonSwiftTests: XCTestCase {
             
         }
     }
+    */
     
 }
