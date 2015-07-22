@@ -11,9 +11,9 @@ import Foundation
 import CoreData
 
 
-class GordonUser: NSManagedObject {
-    @NSManaged var username: String
-    @NSManaged var password: String
-    @NSManaged var sessionStatus: String
-    @NSManaged var tablePreferences: String
+public class GordonUser: NSManagedObject {
+    @NSManaged public var username: String
+    @NSManaged public var password: String
+    @NSManaged public var sessionStatus: String
+    @NSManaged public var tablePreferences: String
 }

@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 
-class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+public class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
     var allUserOptions:  [String] = [], userSelectedOptions: [String] = [];
     
     
     
-    override func viewWillAppear(animated: Bool) {
+    override public func viewWillAppear(animated: Bool) {
         allUserOptions = ["chapelcredits",
         "mealpoints",
         "mealpointsperday",
@@ -27,7 +27,7 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
         
     }
 
-     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
         var presentationLabelForEndPoints: Array<String> = ["CL & W Credit",
         "Mealpoints" ,
@@ -50,7 +50,7 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         
         
@@ -80,7 +80,7 @@ class UserPreferencesViewController: UIViewController,UITableViewDelegate, UITab
         
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allUserOptions.count;
     }
     

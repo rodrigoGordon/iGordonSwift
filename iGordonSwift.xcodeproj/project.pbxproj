@@ -8,18 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B019BA21B3C859400BB6C0F /* GordonUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B019BA11B3C859400BB6C0F /* GordonUser.swift */; };
-		5B019BA31B3C85CE00BB6C0F /* GordonUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B019BA11B3C859400BB6C0F /* GordonUser.swift */; };
-		5B1E91E71B5D618B0085C591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
-		5B1E91E81B5D82CF0085C591 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0891B28D6A7005B9DFB /* LoginViewController.swift */; };
 		5B1E91EA1B5E90E80085C591 /* ScreenOperationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1E91E91B5E90E80085C591 /* ScreenOperationsManager.swift */; };
-		5B1E91EB1B5E90E80085C591 /* ScreenOperationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1E91E91B5E90E80085C591 /* ScreenOperationsManager.swift */; };
-		5B4E25A01B39F6CA009D7477 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C07B1B2896FF005B9DFB /* EndPoint.swift */; };
-		5B4E25A11B39F70A009D7477 /* UserOptionsMenuPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0861B28D218005B9DFB /* UserOptionsMenuPopover.swift */; };
-		5B4E25A21B39F70D009D7477 /* UserPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C07F1B28BD49005B9DFB /* UserPreferencesViewController.swift */; };
-		5B4E25A31B39F710009D7477 /* TableViewCellUserDataCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0821B28CD97005B9DFB /* TableViewCellUserDataCustom.swift */; };
-		5B4E25A41B39F713009D7477 /* MainDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C08B1B28E567005B9DFB /* MainDataViewController.swift */; };
 		5B9DE6181B5045FA006586FC /* DatabaseManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9DE6171B5045FA006586FC /* DatabaseManagement.swift */; };
-		5B9DE6191B5049B9006586FC /* DatabaseManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9DE6171B5045FA006586FC /* DatabaseManagement.swift */; };
 		5BB271921B43357100CB467B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271741B43357100CB467B /* AsyncButton.swift */; };
 		5BB271931B43357100CB467B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271741B43357100CB467B /* AsyncButton.swift */; };
 		5BB271941B43357100CB467B /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271751B43357100CB467B /* AsyncImageView.swift */; };
@@ -80,7 +70,6 @@
 		5BB271CB1B43357100CB467B /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB271911B43357100CB467B /* UnwindSegue.swift */; };
 		5BFE01C11B4ACE4100469A47 /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
 		5BFE01C31B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */; };
-		5BFE01C41B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFE01C21B4ACFE200469A47 /* LogResultsFromServer.swift */; };
 		A356C0561B288DAA005B9DFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356C0551B288DAA005B9DFB /* AppDelegate.swift */; };
 		A356C0591B288DAA005B9DFB /* iGordonSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A356C0571B288DAA005B9DFB /* iGordonSwift.xcdatamodeld */; };
 		A356C05E1B288DAA005B9DFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A356C05C1B288DAA005B9DFB /* Main.storyboard */; };
@@ -477,30 +466,21 @@
 			files = (
 				5BB271BB1B43357100CB467B /* SpringButton.swift in Sources */,
 				5BB271B51B43357100CB467B /* SoundPlayer.swift in Sources */,
-				5BFE01C41B4ACFE200469A47 /* LogResultsFromServer.swift in Sources */,
 				5BB271C31B43357100CB467B /* SpringTextView.swift in Sources */,
 				5BFE01C11B4ACE4100469A47 /* iGordonSwift.xcdatamodeld in Sources */,
 				5BB271A31B43357100CB467B /* DesignableTextField.swift in Sources */,
 				5BB271A51B43357100CB467B /* DesignableTextView.swift in Sources */,
-				5B1E91EB1B5E90E80085C591 /* ScreenOperationsManager.swift in Sources */,
 				5BB271C91B43357100CB467B /* TransitionZoom.swift in Sources */,
 				5BB271C11B43357100CB467B /* SpringTextField.swift in Sources */,
 				5BB2719D1B43357100CB467B /* DesignableImageView.swift in Sources */,
-				5B9DE6191B5049B9006586FC /* DatabaseManagement.swift in Sources */,
-				5B4E25A31B39F710009D7477 /* TableViewCellUserDataCustom.swift in Sources */,
-				5B4E25A41B39F713009D7477 /* MainDataViewController.swift in Sources */,
-				5B4E25A01B39F6CA009D7477 /* EndPoint.swift in Sources */,
 				5BB271A71B43357100CB467B /* DesignableView.swift in Sources */,
 				5BB271B31B43357100CB467B /* Misc.swift in Sources */,
 				5BB271951B43357100CB467B /* AsyncImageView.swift in Sources */,
 				5BB271A11B43357100CB467B /* DesignableTabBarController.swift in Sources */,
 				5BB271971B43357100CB467B /* AutoTextView.swift in Sources */,
 				5BB271CB1B43357100CB467B /* UnwindSegue.swift in Sources */,
-				5B1E91E71B5D618B0085C591 /* AppDelegate.swift in Sources */,
 				5BB271C51B43357100CB467B /* SpringView.swift in Sources */,
 				5BB271BF1B43357100CB467B /* SpringLabel.swift in Sources */,
-				5B019BA31B3C85CE00BB6C0F /* GordonUser.swift in Sources */,
-				5B1E91E81B5D82CF0085C591 /* LoginViewController.swift in Sources */,
 				5BB271AD1B43357100CB467B /* KeyboardLayoutConstraint.swift in Sources */,
 				5BB271931B43357100CB467B /* AsyncButton.swift in Sources */,
 				5BB271A91B43357100CB467B /* ImageLoader.swift in Sources */,
@@ -508,8 +488,6 @@
 				5BB271C71B43357100CB467B /* TransitionManager.swift in Sources */,
 				5BB2719B1B43357100CB467B /* DesignableButton.swift in Sources */,
 				5BB271991B43357100CB467B /* BlurView.swift in Sources */,
-				5B4E25A11B39F70A009D7477 /* UserOptionsMenuPopover.swift in Sources */,
-				5B4E25A21B39F70D009D7477 /* UserPreferencesViewController.swift in Sources */,
 				5BB2719F1B43357100CB467B /* DesignableLabel.swift in Sources */,
 				5BB271B91B43357100CB467B /* SpringAnimation.swift in Sources */,
 				A356C06F1B288DAA005B9DFB /* iGordonSwiftTests.swift in Sources */,

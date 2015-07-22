@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
+public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     
     
     
@@ -23,15 +23,15 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
     
     var responseData: NSMutableData  = NSMutableData();
     
-    func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+    public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         responseData.appendData(data);
         
     }
-    func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
+    public func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
         return nil;
     }
     
-    func connectionDidFinishLoading(connection: NSURLConnection) {
+    public func connectionDidFinishLoading(connection: NSURLConnection) {
         
         
         let jsonObjectFromServer: AnyObject! =
@@ -63,7 +63,7 @@ class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate{
         
     }
     
-    func loadDataFromServer(userProfile: Dictionary<String,String?>){
+    public func loadDataFromServer(userProfile: Dictionary<String,String?>){
         
       
         var username: String? = userProfile["username"]!

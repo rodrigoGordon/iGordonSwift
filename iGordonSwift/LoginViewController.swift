@@ -16,7 +16,7 @@ import UIKit
 import CoreData
 
 
-class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UITextFieldDelegate, UITextViewDelegate {
+public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConnectionDataDelegate, UITextFieldDelegate, UITextViewDelegate {
     
   
     
@@ -51,14 +51,14 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     var urlConnection: NSURLConnection = NSURLConnection();
 
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         
         txtUserName?.delegate = self
         txtPassword?.delegate = self
   
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override public func viewWillDisappear(animated: Bool) {
         
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -67,7 +67,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override public func viewWillAppear(animated: Bool) {
         
         let (userExists, endPointsDBCheckLogin, username, password) = dbManagement.checkUserLoginStatus()
         
@@ -122,7 +122,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
     //used for tab between the txtFields and Done button
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField == txtUserName{
             txtPassword.becomeFirstResponder()
         }else if textField == txtPassword{
@@ -191,7 +191,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
 
-    func performLoginAtServer(){
+    public func performLoginAtServer(){
 
        
         
@@ -217,7 +217,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
     
-    func returnsErrorMessageBadLogin(){
+    public func returnsErrorMessageBadLogin(){
     
         if !loginAttempted {
             loginAttempted = true
@@ -246,21 +246,21 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     }
     
 
-    func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+    public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         responseData.appendData(data);
     }
     
-    func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
+    public func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
         let httpResponse = response as? NSHTTPURLResponse
         httpResponseFromServer = httpResponse!.statusCode
         
     }
     
-    func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
+    public func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
         return nil;
     }
     
-    func connectionDidFinishLoading(connection: NSURLConnection) {
+    public func connectionDidFinishLoading(connection: NSURLConnection) {
         
         if(httpResponseFromServer == 200 ){
             
@@ -279,7 +279,7 @@ class LoginViewController: UIViewController, NSURLConnectionDelegate, NSURLConne
     
 
   
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         

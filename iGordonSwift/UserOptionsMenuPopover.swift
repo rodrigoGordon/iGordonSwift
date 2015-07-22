@@ -8,22 +8,22 @@
 
 import UIKit
 
-class UserOptionsMenuPopover: UIViewController,UITableViewDelegate, UITableViewDataSource {
+public class UserOptionsMenuPopover: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
     var itemMenuOptions: [String] = ["Gordon.edu" , "cs.gordon.edu" , "Logout"];
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
 
         let cell:UITableViewCell=UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell");
@@ -38,7 +38,7 @@ class UserOptionsMenuPopover: UIViewController,UITableViewDelegate, UITableViewD
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         
         var url: String?;
@@ -65,7 +65,7 @@ class UserOptionsMenuPopover: UIViewController,UITableViewDelegate, UITableViewD
         
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemMenuOptions.count;
     }
 

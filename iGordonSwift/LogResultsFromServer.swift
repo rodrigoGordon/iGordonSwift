@@ -11,11 +11,11 @@ import Foundation
 import CoreData
 
 
- class LogResultsFromServer: NSManagedObject {
-    @NSManaged var idUser: String
-    @NSManaged var endPointSearched: String
-    @NSManaged var dateOfSearch: NSDate
-    @NSManaged var valueReceived: String
+ public class LogResultsFromServer: NSManagedObject {
+    @NSManaged public var idUser: String
+    @NSManaged public var endPointSearched: String
+    @NSManaged public var dateOfSearch: NSDate
+    @NSManaged public var valueReceived: String
     //define the fk for this class
-    @NSManaged var fkGordonUser: String
+    @NSManaged public var fkGordonUser: String
 }

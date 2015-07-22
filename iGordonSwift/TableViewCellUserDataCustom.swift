@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TableViewCellUserDataCustom: UITableViewCell {
+public class TableViewCellUserDataCustom: UITableViewCell {
     
     
     @IBOutlet weak var imgIconForEndPoint: SpringImageView!
@@ -37,7 +37,7 @@ class TableViewCellUserDataCustom: UITableViewCell {
     var selectedRotate: CGFloat = 0
     var repeatCount: Float = 100
 
-    func setOptionsForAnimationInIcon() {
+    public func setOptionsForAnimationInIcon() {
         
         
         imgIconForEndPoint.force = selectedForce
@@ -59,7 +59,7 @@ class TableViewCellUserDataCustom: UITableViewCell {
         
     }
     
-    func setOptionsForAnimationInResultLabel() {
+    public func setOptionsForAnimationInResultLabel() {
         
         
         lblResultFromServer.force = selectedForce

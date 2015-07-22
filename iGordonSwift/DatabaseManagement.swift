@@ -21,7 +21,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class DatabaseManagement: NSObject {
+public class DatabaseManagement: NSObject {
     
     
     
@@ -42,7 +42,7 @@ class DatabaseManagement: NSObject {
     //   If userGordonName is invalid (nil or empty string), then an empty array will be
     //   returned.
 
-    func saveLoginGetPreferences(userGordonName: String?, userGordonPassword: String?) -> [String]{
+    public func saveLoginGetPreferences(userGordonName: String?, userGordonPassword: String?) -> [String]{
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
@@ -116,7 +116,7 @@ class DatabaseManagement: NSObject {
     
     // In the case of no user found logged in, the userExists will be FALSE and SHOULD be used as a validation parameter, because the other parameters will be NIL.
     
-    func checkUserLoginStatus() -> (Bool, [String],String, String){
+    public func checkUserLoginStatus() -> (Bool, [String],String, String){
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
@@ -165,7 +165,7 @@ class DatabaseManagement: NSObject {
     // The method is supposed to be called when the user is logged in,
     // so it will always find a user to logout. Such as: from a popover inside
     // a main view.
-    func logoutUserDeletePassword(){
+    public func logoutUserDeletePassword(){
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
@@ -213,7 +213,7 @@ class DatabaseManagement: NSObject {
     // In case of a null parameter or a user that passes an empty array, there's no exception but the default
     // preferences are saved instead.
     
-    func updateUserTablePreferences(userTablePreferences: [String]){
+    public func updateUserTablePreferences(userTablePreferences: [String]){
         
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -265,7 +265,7 @@ class DatabaseManagement: NSObject {
     //        have multiple users
     
     
-    func saveEndPointSearch(endPointDescription: String, valueReceivedFromServer: String, userName: String){
+    public func saveEndPointSearch(endPointDescription: String, valueReceivedFromServer: String, userName: String){
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
@@ -336,7 +336,7 @@ class DatabaseManagement: NSObject {
     // logValue: String? - Returns the most recent stored value for that respective endpoint.
 
     
-    func loadLastEndPointSearch(endPointDescription: String, userName: String) -> (Int, String?){
+    public func loadLastEndPointSearch(endPointDescription: String, userName: String) -> (Int, String?){
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
@@ -385,7 +385,7 @@ class DatabaseManagement: NSObject {
     
     
     
-    func testMethodForTestTarget(endPointDescription: String, userName: String, managedContext : NSManagedObjectContext) -> (Int, String?){
+    public func testMethodForTestTarget(endPointDescription: String, userName: String, managedContext : NSManagedObjectContext) -> (Int, String?){
         
         
         /*

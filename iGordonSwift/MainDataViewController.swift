@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPopoverPresentationControllerDelegate {
+public class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPopoverPresentationControllerDelegate {
 
 
     @IBOutlet var tableViewData: UITableView!;
@@ -28,7 +28,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     var snapshot: UIView? = nil
     
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
@@ -116,7 +116,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override public func viewWillAppear(animated: Bool) {
     
         self.navigationItem.hidesBackButton = true;
   
@@ -225,7 +225,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
 
     // Override to support editing the table view.
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if editingStyle == UITableViewCellEditingStyle.Delete  {
             // Delete the row from the data source
@@ -246,27 +246,27 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true ;
     }
     
     
-    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false;
     }
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true;
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return userTablePreferences.count;
     }
     
 
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
     
 
@@ -382,7 +382,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
  
 
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
       
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
@@ -407,7 +407,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     //Example found at https://github.com/moayes/Cities
     
-    func longPressGestureRecognized(gesture: UILongPressGestureRecognizer) {
+    public func longPressGestureRecognized(gesture: UILongPressGestureRecognizer) {
 
         let state: UIGestureRecognizerState = gesture.state;
         let location: CGPoint = gesture.locationInView(tableViewData)
@@ -482,7 +482,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     // MARK: Helper
     
-    func customSnapshotFromView(inputView: UIView) -> UIView {
+    public func customSnapshotFromView(inputView: UIView) -> UIView {
         
         // Make an image from the input view.
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
@@ -511,7 +511,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath
         indexPath: NSIndexPath) -> CGFloat {
             
             
@@ -529,7 +529,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     }
     
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
        
@@ -571,7 +571,7 @@ class MainDataViewController: UIViewController,UITableViewDelegate, UITableViewD
     }
     
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+    public func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None ;
     }
     

@@ -16,12 +16,13 @@ import CoreData
 class iGordonSwiftTests: XCTestCase {
     
     var loginObj: LoginViewController!
+    
     var maindDataObj: MainDataViewController!
     var userPreferencesObj: UserPreferencesViewController!
     var userOptionsObj: UserOptionsMenuPopover!
     var endPointObj: EndPoint!
     var tableViewCellCustom: TableViewCellUserDataCustom!
-
+    
     override func setUp() {
         super.setUp()
         self.loginObj = LoginViewController()
@@ -39,7 +40,7 @@ class iGordonSwiftTests: XCTestCase {
     }
     
     func testLoadViews(){
-
+        
         XCTAssertNotNil(loginObj.view, "View did not load for LoginViewController")
         XCTAssertNotNil(maindDataObj.view, "View did not load for MainDataViewController")
         XCTAssertNotNil(userPreferencesObj.view, "View did not load for UserPreferencesViewController")
@@ -49,6 +50,7 @@ class iGordonSwiftTests: XCTestCase {
     }
     
     func testNotNilVariables(){
+        /*
         //EndPoint variables
         XCTAssertNotNil(endPointObj.responseData, "Response data is nil")
         
@@ -68,15 +70,12 @@ class iGordonSwiftTests: XCTestCase {
         XCTAssertTrue(maindDataObj.userProfile.isEmpty, "userProfile is not empty!!")
         XCTAssertNotNil(maindDataObj.endPointsDictionary, "endpoints dictionary is nil")
         
-        
+        */
         
     }
     
     
     func testDBForDates() {
-        
-        
-       
         
         //testing code from andrewcbancroft.com/2015/01/13/unit-testing-model-layer-core-data-swift
         
@@ -87,71 +86,32 @@ class iGordonSwiftTests: XCTestCase {
         
         let managedObjectContext = NSManagedObjectContext()
         managedObjectContext.persistentStoreCoordinator = persistenStoreCoordinator
-        /*
-        let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
-        
-        let resultPredicate1 = NSPredicate(format: "idUser==%@", "iGordon")
-        let resultPredicate2 = NSPredicate(format: "endPointSearched==%@", "chapelcredits")
-        
-        var compound = NSCompoundPredicate.andPredicateWithSubpredicates([resultPredicate1, resultPredicate2])
-        fetchRequest.predicate = compound
         
         
-        if let fetchResults = managedObjectContext.executeFetchRequest(fetchRequest, error: nil) as? [LogResultsFromServer]{
-            
-            if fetchResults.count >= 1{
-                
-                var logUpdate = fetchResults[0]
-                logUpdate.dateOfSearch = NSDate(timeIntervalSinceNow: -10000000000)
-                logUpdate.valueReceived = "32"
-                
-                var saveError: NSError? = nil
-                
-                if !managedObjectContext.save(&saveError){
-                    println("Problems logging out:  \(saveError)")
-                }
-                println("Data saved")
-                
-            }else{
-                //creates a new entry in the table, since there's no result from the DB
-                */
-               // var logs = NSEntityDescription.insertNewObjectForEntityForName("LogResultsFromServer",
-                 //   inManagedObjectContext: managedObjectContext) as! LogResultsFromServer
-                
+        var logs: LogResultsFromServer = (NSEntityDescription.insertNewObjectForEntityForName("LogResultsFromServer",
+            inManagedObjectContext: managedObjectContext) as? LogResultsFromServer)!
         
-                var logs: AnyObject = NSEntityDescription.insertNewObjectForEntityForName("LogResultsFromServer",
-                    inManagedObjectContext: managedObjectContext)
-        println(logs.description)
+        logs.idUser = "iGordon"
+        logs.endPointSearched = "chapelcredits"
+        logs.dateOfSearch = NSDate(timeIntervalSinceNow: 10000000000)
+        logs.valueReceived = "62"
         
-        if let test = logs as? LogResultsFromServer{
-            println("CAST WORKS!!!")
+        var error: NSError?
+        if !managedObjectContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+        }else{
+            println("Log created in the DB")
         }
         
-                /*
-                logs.idUser = "iGordon"
-                logs.endPointSearched = "chapelcredits"
-                logs.dateOfSearch = NSDate(timeIntervalSinceNow: -10000000000)
-                logs.valueReceived = "32"
-                */
-                var error: NSError?
-                if !managedObjectContext.save(&error) {
-                    println("Could not save \(error), \(error?.userInfo)")
-                }else{
-                    println("Log created in the DB")
-                }
-                
-            //}
-        //}
-
-        //let testPeriod = 2
         let dbManagement: DatabaseManagement = DatabaseManagement()
-        let (testPeriod, endPointValue) = dbManagement.testMethodForTestTarget("chapelcredits", userName: "iGordon", managedContext: managedObjectContext)
+        
+        let (testPeriod,endPoint) = dbManagement.testMethodForTestTarget("chapelcredits", userName: "iGordon", managedContext: managedObjectContext)
         println("**********************")
         println(testPeriod)
-        println(endPointValue)
+        println(endPoint)
         println("**********************")
-        XCTAssertEqual(testPeriod, 2, "Variable testPeriod is old enough according to the test")
- 
+        XCTAssertEqual(testPeriod, 0, "Variable testPeriod is old enough according to the test")
+        
     }
     
     
@@ -164,11 +124,11 @@ class iGordonSwiftTests: XCTestCase {
     }
     /*
     func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-            
-        }
+    // This is an example of a performance test case.
+    self.measureBlock() {
+    // Put the code you want to measure the time of here.
+    
+    }
     }
     */
     
