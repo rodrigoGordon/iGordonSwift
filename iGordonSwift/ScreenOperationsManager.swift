@@ -6,6 +6,8 @@
 //  Such as: adjust the labels inside a cell; control DRAG and REORDER operation.
 //
 //
+//  NOT IN OPERATION BY ANY CLASS IN THE APP. STILL IN TEST PROCESS.
+//
 //  Created by Rodrigo on 7/21/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
 //

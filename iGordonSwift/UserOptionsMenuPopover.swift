@@ -2,6 +2,10 @@
 //  UserOptionsMenuPopover.swift
 //  iGordonSwift
 //
+//  The class creates a basic tableView that will be presented inside a popover in the main screen. It
+//  also provides URL links inside the rows to Gordon related websites or a logout process, which is
+//  conducted by a segue.
+//
 //  Created by Rodrigo Amaral on 6/10/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
 //
@@ -29,7 +33,7 @@ public class UserOptionsMenuPopover: UIViewController,UITableViewDelegate, UITab
         let cell:UITableViewCell=UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell");
         
         cell.textLabel!.text = itemMenuOptions[indexPath.row];
-        
+        cell.textLabel!.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 20)
 
         
         return cell;

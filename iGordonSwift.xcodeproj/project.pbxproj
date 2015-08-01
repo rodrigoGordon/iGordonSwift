@@ -362,6 +362,11 @@
 					A356C04F1B288DAA005B9DFB = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 7YP5ZV7J9W;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					A356C0671B288DAA005B9DFB = {
 						CreatedOnToolsVersion = 6.3.2;

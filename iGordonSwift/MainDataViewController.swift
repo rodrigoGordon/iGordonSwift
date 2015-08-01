@@ -28,54 +28,57 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
     var snapshot: UIView? = nil
     
     
+    
+    
+    
+    var time: NSDate?
+    
+    func fetch(completion: () -> Void) {
+        time = NSDate()
+        completion()
+    }
+    
+    func updateUI() {
+        if let time = time {
+           self.title = "IGordonSwift2"
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        var chapelCreditEndPoint = EndPoint();
+        var chapelCreditEndPoint = EndPoint(nameInit: "chapelcredits", cellDescriptionInit: "CL&W CREDITS" , imageInit: "chapel.png", colorRGBInit: [11/255.0 , 54/255.0 , 112/255.0]);
         
         
-        chapelCreditEndPoint.name = "chapelcredits";
-        chapelCreditEndPoint.cellDescription = "CL&W CREDITS" ;
-        chapelCreditEndPoint.colorRGB = [11/255.0 , 54/255.0 , 112/255.0];
-        chapelCreditEndPoint.image = "chapel.png" ;
-        
-        var mealPointsEndPoint = EndPoint();
-        
-        mealPointsEndPoint.name = "mealpoints";
-        mealPointsEndPoint.cellDescription = "MEALPOINTS" ;
-        mealPointsEndPoint.colorRGB = [236/255.0, 147/255.0, 34/255.0];
-        mealPointsEndPoint.image = "silverware.png" ;
-        
-        var mealPointsPerDayEndPoint = EndPoint();
-        
-        mealPointsPerDayEndPoint.name = "mealpointsperday";
-        mealPointsPerDayEndPoint.cellDescription = "MEALPOINTS LEFT/DAY" ;
-        mealPointsPerDayEndPoint.colorRGB = [130/255.0 , 54/255.0 , 178/255.0];
-        mealPointsPerDayEndPoint.image =  "calculator.png" ;
-        
-        var daysleftInSemesterEndPoint = EndPoint();
-        
-        daysleftInSemesterEndPoint.name = "daysleftinsemester";
-        daysleftInSemesterEndPoint.cellDescription = "DAYS LEFT IN SEMESTER" ;
-        daysleftInSemesterEndPoint.colorRGB = [88/255.0 , 248/255.0 , 151/255.0];
-        daysleftInSemesterEndPoint.image = "calendar.png" ;
-        
-        var studentIdEndPoint = EndPoint();
-        
-        studentIdEndPoint.name = "studentid";
-        studentIdEndPoint.cellDescription = "STUDENT ID" ;
-        studentIdEndPoint.colorRGB = [236/255.0, 90/255.0, 91/255.0];
-        studentIdEndPoint.image =  "person.png" ;
-        
-        var temperatureEndPoint =  EndPoint();
-        
-        temperatureEndPoint.name = "temperature";
-        temperatureEndPoint.cellDescription = "TEMPERATURE" ;
-        temperatureEndPoint.colorRGB = [71/255.0 , 212/255.0, 201/255.0];
-        temperatureEndPoint.image = "thermometer.png" ;
+        var mealPointsEndPoint = EndPoint(nameInit: "mealpoints", cellDescriptionInit: "MEALPOINTS" , imageInit: "silverware.png", colorRGBInit: [236/255.0, 147/255.0, 34/255.0]);
         
         
+        var mealPointsPerDayEndPoint = EndPoint(nameInit: "mealpointsperday", cellDescriptionInit: "MEALPOINTS LEFT/DAY" , imageInit: "calculator.png", colorRGBInit: [130/255.0 , 54/255.0 , 178/255.0]);
+        
+        
+        var daysleftInSemesterEndPoint = EndPoint(nameInit: "daysleftinsemester", cellDescriptionInit: "DAYS LEFT IN SEMESTER" , imageInit: "calendar.png", colorRGBInit: [88/255.0 , 248/255.0 , 151/255.0]);
+        
+        
+        var studentIdEndPoint = EndPoint(nameInit: "studentid", cellDescriptionInit: "STUDENT ID" , imageInit: "person.png", colorRGBInit: [236/255.0, 90/255.0, 91/255.0]);
+        
+        
+        var temperatureEndPoint =  EndPoint(nameInit: "temperature", cellDescriptionInit: "TEMPERATURE" , imageInit: "thermometer.png", colorRGBInit: [71/255.0 , 212/255.0, 201/255.0]);
+        
+
+            
         
         endPointsDictionary = [
                 chapelCreditEndPoint.name : chapelCreditEndPoint,
@@ -122,13 +125,36 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
   
     }
     
+    //in development
+    func backGroundFetch(completion: () -> Void){
+        
+        let (userExists, endPointsDBCheckLogin, username, password) = dbManagement.checkUserLoginStatus()
+        
+        if userExists {
+
+        for i in 0...(endPointsDBCheckLogin.count-1){
+            
+            endPointsDictionary[endPointsDBCheckLogin[i]]?.loadDataFromServer([username:password]);
+            
+        }
+            
+        }
+        completion()
+        
+    }
     
+    // For any change in the device orientation , the method adjust the table content and 
+    // update it. Called through Notification Center.
     func adjustTableAfterRotation(){
 
         tableViewData.reloadData()
   
     }
     
+    // Called from the Notification Center, the method receives as parameter:
+    // notification - inside there's userInfo which has a key passed from the class EndPoint and its respective object.
+    //  The key is then used as an ID to update the respective info in the DB and find the row that should be updated 
+    //  in the screen.
     
     func updateSpecificRowWithNotification(notification: NSNotification)
     {
@@ -167,6 +193,12 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
 
     
     
+    // Called from the Notification Center, the method receives as parameter:
+    // notification - inside there's userInfo which has a dictionary with a key = "userPreferences" and the Value = Array of
+    //  of String with the new preferences of the user. Example: [userPreferences: "chapelcredits,studentid,mealpoints"]
+    //  The array is then used to: 1) update the preferences at this class, through the object userTablePreferences ;
+    //  2)Reload the respective rows which the array corresponds.
+    // The function is called dinamically as the user touches the popover menu items at the left in the main screen
     func updateTableAfterChangesAtUserPreferences(notification: NSNotification){
         
         let tempParseFromNotification: Dictionary<String,[String]> =
@@ -265,7 +297,7 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
     }
     
 
-    
+    //Native from iOS, used to configure new/current cells.
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
     
@@ -406,7 +438,7 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
 
     
     //Example found at https://github.com/moayes/Cities
-    
+    // Manages the reordering process for the tableView.
     public func longPressGestureRecognized(gesture: UILongPressGestureRecognizer) {
 
         let state: UIGestureRecognizerState = gesture.state;
@@ -502,14 +534,7 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath
         indexPath: NSIndexPath) -> CGFloat {
@@ -517,9 +542,7 @@ public class MainDataViewController: UIViewController,UITableViewDelegate, UITab
             
             // UIApplication.sharedApplication().statusBarFrame.height in points according to
             //http://stackoverflow.com/questions/20687082/how-do-i-make-my-ios7-uitableviewcontroller-not-appear-under-the-top-status-bar
-            
-            
-            
+
             if !UIApplication.sharedApplication().statusBarHidden {
             
             return (self.view.frame.size.height - (self.navigationController?.navigationBar.frame.height)! - (UIApplication.sharedApplication().statusBarFrame.height)) / CGFloat(userTablePreferences.count);

@@ -2,6 +2,11 @@
 //  LogResultsFromServer.swift
 //  iGordonSwift
 //
+//  The class represents the Entity LogResultsFromServer in Swift CoreData, its Entity Relationship
+//  with GordonUser has as foreign key the fkGordonUser( not implemented, DB management class uses a predicate
+//    to find the user - IN PROCESS TO BE FIXED) .
+//
+//
 //  Created by Rodrigo on 7/6/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
 //

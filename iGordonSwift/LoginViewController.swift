@@ -2,10 +2,10 @@
 //  LoginViewController.swift
 //  iGordonSwift
 //
-//  The class will manage the process of talking with the server and the CoreData
-//   SqlLite database. A main constraint is sessionStatus which represents simply "in" or "out",
-//   using as a way to define if the app is not in the memory anymore but the user still logged "in"
-//   or "out"
+//  The class will firstly manage the process of Login by commmunicating with the api server and the CoreData
+//  database. The process involves checking a user with an active sessionStatus in the DB, then login at
+//  server if necessary. Furthermore, through the segue it also pass data to the MainDataViewController class, such
+//  as: TablePreferences and userProfile(login, password).
 //
 //
 //  Created by Rodrigo Amaral on 6/10/15.
@@ -94,9 +94,11 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
  
     }
     
+
     
-    
-    //function used to move the txtFields when the keyboard appears
+    //function used to move the screen when the keyboard appears
+    //Parameter: up - Defines if the view should go "up" or be readjusted 
+    // to its previous position.
     func animateTextField(up: Bool){
         var movement = (up ? -keyBoardHeight : keyBoardHeight)
         if !viewAdjusted {
@@ -107,7 +109,10 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
         }
     }
     
-    
+    //Function used with the Notification object, to then ask the view to adjust. Obs: Called by the Notification Center
+    // not need to call it manually.
+    //Paratemer: Notification - Sent by the UIKeyboardWillShowNotification, contains the keyboard height
+    // used to adjust the view.
     func keyboardWillShow(notification: NSNotification){
         if let userInfo = notification.userInfo{
             if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
@@ -116,7 +121,7 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
             }
         }
     }
-    
+    //Called by the Notification Center in order the readjust the view
     func keyboardWillHide(notification: NSNotification){
         self.animateTextField(false)
     }
@@ -165,7 +170,7 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
             
         }else {
             loginAttempted = true
-            returnsErrorMessageBadLogin()
+            returnsErrorMessageForLogin()
         }
         
     }
@@ -187,10 +192,14 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
             
         }
     
-    
     }
     
-
+    // Since most of the methods in the class belong to native classes, the performLoginAtServer simply initiates
+    // the process starting a connection with a determined URL.
+    // urlGoco is the official URL for connection with the Gordon College server through Adam Vig api.
+    // urlTestHeroku is a simple Python running server hosted ar Heroku, for testing purposes. More at
+    //  https://github.com/rodrigoGordon/serverPython
+    
     public func performLoginAtServer(){
 
        
@@ -203,21 +212,26 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
         
         
         //url used to connect to the debug server
-        let url: NSURL = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift")!;
+        let urlTestHeroku: NSURL = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift")!;
         
-        let request = NSMutableURLRequest(URL: url);
+        let request = NSMutableURLRequest(URL: urlTestHeroku);
         
         
         request.HTTPMethod = "GET" ;
         urlConnection = NSURLConnection(request: request, delegate: self)!;
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("returnsErrorMessageBadLogin"),
+        var timer = NSTimer.scheduledTimerWithTimeInterval(6, target: self, selector: Selector("returnsErrorMessageForLogin"),
             userInfo: nil, repeats: false)
 
     }
     
     
-    public func returnsErrorMessageBadLogin(){
+    
+    // The method manages a badlogin attempt or a server that is not 
+    // responding.
+    // Variables: loginAttempted - Check if there's was already one attempt of connection
+    
+    public func returnsErrorMessageForLogin(){
     
         if !loginAttempted {
             loginAttempted = true
@@ -255,11 +269,7 @@ public class LoginViewController: UIViewController, NSURLConnectionDelegate, NSU
         httpResponseFromServer = httpResponse!.statusCode
         
     }
-    
-    public func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
-        return nil;
-    }
-    
+
     public func connectionDidFinishLoading(connection: NSURLConnection) {
         
         if(httpResponseFromServer == 200 ){

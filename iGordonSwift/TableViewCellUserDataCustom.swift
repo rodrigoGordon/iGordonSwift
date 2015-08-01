@@ -2,6 +2,10 @@
 //  TableViewCellUserDataCustom.swift
 //  iGordonSwift
 //
+//  Class used to define the properties of a Custom Cell TableView for the App. It
+//  connects the outlets and provides initialization.
+//
+//
 //  Created by Rodrigo Amaral on 6/10/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
 //
@@ -37,6 +41,11 @@ public class TableViewCellUserDataCustom: UITableViewCell {
     var selectedRotate: CGFloat = 0
     var repeatCount: Float = 100
 
+    
+    
+    // init for the animation variables
+    // Should be called before the method startAnimation() for the object
+    
     public func setOptionsForAnimationInIcon() {
         
         
@@ -59,6 +68,8 @@ public class TableViewCellUserDataCustom: UITableViewCell {
         
     }
     
+    // init for the animation variables
+    // Should be called before the method startAnimation() for the object
     public func setOptionsForAnimationInResultLabel() {
         
         

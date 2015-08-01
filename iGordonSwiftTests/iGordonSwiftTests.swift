@@ -22,16 +22,26 @@ class iGordonSwiftTests: XCTestCase {
     var userOptionsObj: UserOptionsMenuPopover!
     var endPointObj: EndPoint!
     var tableViewCellCustom: TableViewCellUserDataCustom!
+    var dbManagement: DatabaseManagement!
     
+    
+    
+    // Put setup code here. This method is called before the invocation of each test method in the class.
     override func setUp() {
         super.setUp()
+        
         self.loginObj = LoginViewController()
         self.maindDataObj = MainDataViewController()
         self.userPreferencesObj = UserPreferencesViewController()
         self.userOptionsObj = UserOptionsMenuPopover()
-        self.endPointObj = EndPoint()
+        
+        //default config for an EndPoint
+        self.endPointObj = EndPoint(nameInit: "chapelcredits", cellDescriptionInit: "CL&W CREDITS" , imageInit: "chapel.png", colorRGBInit: [11/255.0 , 54/255.0 , 112/255.0])
+        
         self.tableViewCellCustom = TableViewCellUserDataCustom()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.dbManagement = DatabaseManagement()
+        
+        
     }
     
     override func tearDown() {
@@ -49,32 +59,7 @@ class iGordonSwiftTests: XCTestCase {
         
     }
     
-    func testNotNilVariables(){
-        /*
-        //EndPoint variables
-        XCTAssertNotNil(endPointObj.responseData, "Response data is nil")
-        
-        //LoginViewController variables
-        XCTAssertNotNil(loginObj.userGordonName, "username is nil")
-        XCTAssertNotNil(loginObj.userGordonPassword, "Userpassword is nil")
-        XCTAssertNotNil(loginObj.httpResponseFromServer, "httpResponse is nil")
-        XCTAssertNil(loginObj.activityLogin, "activity Indicator is nil")
-        //test for a cancel of non existent request
-        loginObj.returnsErrorMessageBadLogin()
-        
-        loginObj.performLoginAtServer()
-        XCTAssertNotNil(loginObj.urlConnection, "Connection is nil!! Please Review perforLoginAtServer method!!")
-        XCTAssertNotNil(loginObj.keyBoardHeight, "keyboardheight is nil")
-        
-        //MainDataViewController variables
-        XCTAssertTrue(maindDataObj.userProfile.isEmpty, "userProfile is not empty!!")
-        XCTAssertNotNil(maindDataObj.endPointsDictionary, "endpoints dictionary is nil")
-        
-        */
-        
-    }
-    
-    
+
     func testDBForDates() {
         
         //testing code from andrewcbancroft.com/2015/01/13/unit-testing-model-layer-core-data-swift
@@ -93,7 +78,7 @@ class iGordonSwiftTests: XCTestCase {
         
         logs.idUser = "iGordon"
         logs.endPointSearched = "chapelcredits"
-        logs.dateOfSearch = NSDate(timeIntervalSinceNow: 10000000000)
+        logs.dateOfSearch = NSDate(timeIntervalSinceNow: -10000000000)
         logs.valueReceived = "62"
         
         var error: NSError?
@@ -102,34 +87,35 @@ class iGordonSwiftTests: XCTestCase {
         }else{
             println("Log created in the DB")
         }
-        
-        let dbManagement: DatabaseManagement = DatabaseManagement()
-        
+
         let (testPeriod,endPoint) = dbManagement.testMethodForTestTarget("chapelcredits", userName: "iGordon", managedContext: managedObjectContext)
-        println("**********************")
-        println(testPeriod)
-        println(endPoint)
-        println("**********************")
-        XCTAssertEqual(testPeriod, 0, "Variable testPeriod is old enough according to the test")
+        XCTAssertEqual(testPeriod, 2, "Variable testPeriod is not old enough according to the test")
+        
+        
+        
+        
+        //Official method used by the app classes
+        dbManagement.saveEndPointSearch("chapelcredits", valueReceivedFromServer: "63", userName: "iGordon")
+        let (dbPeriod, endPointDbValue) = dbManagement.loadLastEndPointSearch("chapelcredits", userName: "iGordon")
+        
+        XCTAssertEqual(dbPeriod, 0, "Data not being saved correctly")
+        
+        
+        
         
     }
     
-    
-    
-    
-    func testExample() {
+    func testEndPointLoadDataFromServer(notification: NSNotification){
         
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        let keyOfEndPointToBeUpdated = notification.userInfo!.keys.first;
+        
+       
+        
     }
-    /*
-    func testPerformanceExample() {
-    // This is an example of a performance test case.
-    self.measureBlock() {
-    // Put the code you want to measure the time of here.
     
-    }
-    }
-    */
+
+    
+    
+
     
 }

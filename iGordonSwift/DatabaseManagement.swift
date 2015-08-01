@@ -384,21 +384,11 @@ public class DatabaseManagement: NSObject {
     }
     
     
-    
+    //function used only for testing .. does the same as loadLastEndPointSearch
     public func testMethodForTestTarget(endPointDescription: String, userName: String, managedContext : NSManagedObjectContext) -> (Int, String?){
         
         
-        /*
-        let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])!
-        let persistenStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        persistenStoreCoordinator.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil, error: nil)
-        
-        let managedContext = NSManagedObjectContext()
-        managedContext.persistentStoreCoordinator = persistenStoreCoordinator
-        */
-        
-        //let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        //let managedContext = appDelegate.managedObjectContext!
+
         
         let fetchRequest = NSFetchRequest(entityName: "LogResultsFromServer")
         let resultPredicate1 = NSPredicate(format: "idUser==%@", userName)

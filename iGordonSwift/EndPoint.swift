@@ -2,6 +2,9 @@
 //  EndPoint.swift
 //  iGordonSwift
 //
+//  The main Model in the App. The class mostly perform operations to load data from the Server and return its attributes.
+//   The connection with Gordon and Test server is based on NSURLConnectionDelegate.
+//
 //  Created by Rodrigo Amaral on 6/10/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
 //
@@ -22,6 +25,15 @@ public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDel
     var colorRGB: [CGFloat] = [0, 0 ,0];
     
     var responseData: NSMutableData  = NSMutableData();
+    
+    
+    
+    public init(nameInit: String, cellDescriptionInit: String, imageInit: String, colorRGBInit: [CGFloat]) {
+        self.name = nameInit
+        self.cellDescription = cellDescriptionInit
+        self.image = imageInit
+        self.colorRGB = colorRGBInit
+    }
     
     public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         responseData.appendData(data);
@@ -63,6 +75,10 @@ public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDel
         
     }
     
+    
+    // Function called whenever a determined class need the Endpoint newest data from the Server. Parameter:
+    // userProfile - Simply the username and password( base64 for Gordon Server - Adam Vig api )
+    // It creates a connection object and lets the delegate manage it
     public func loadDataFromServer(userProfile: Dictionary<String,String?>){
         
       

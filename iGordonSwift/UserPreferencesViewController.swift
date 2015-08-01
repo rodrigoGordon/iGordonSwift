@@ -2,6 +2,12 @@
 //  UserPreferencesViewController.swift
 //  iGordonSwift
 //
+//  The class creates a basic tableView that will be presented inside a popover in the main screen. It
+//  also provides a Notification mechanism that will tell the NotificationCenter that the respective touched
+//  row needs to be updated(added or removed)
+//  
+//
+//
 //  Created by Rodrigo Amaral on 6/10/15.
 //  Copyright (c) 2015 Gordon College. All rights reserved.
 //
@@ -39,7 +45,9 @@ public class UserPreferencesViewController: UIViewController,UITableViewDelegate
         var cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell");
         
         cell.textLabel!.text = presentationLabelForEndPoints[indexPath.row];
-
+        cell.textLabel!.font = UIFont (name: "HelveticaNeue-CondensedBold", size: 20)
+        
+        
         if contains(userSelectedOptions, allUserOptions[indexPath.row]){
             
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark ;
