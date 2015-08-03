@@ -59,7 +59,8 @@ class iGordonSwiftTests: XCTestCase {
         
     }
     
-
+    // test firstly validates the operation with dates. Then check if a local DB operation is processed
+    // correctly. Such as: saveEdPointSearch() and LoadLastEndPointSearch()
     func testDBForDates() {
         
         //testing code from andrewcbancroft.com/2015/01/13/unit-testing-model-layer-core-data-swift
@@ -98,22 +99,47 @@ class iGordonSwiftTests: XCTestCase {
         dbManagement.saveEndPointSearch("chapelcredits", valueReceivedFromServer: "63", userName: "iGordon")
         let (dbPeriod, endPointDbValue) = dbManagement.loadLastEndPointSearch("chapelcredits", userName: "iGordon")
         
-        XCTAssertEqual(dbPeriod, 0, "Data not being saved correctly")
-        
-        
-        
-        
+        XCTAssertEqual(dbPeriod, 0, "Data is not being saved correctly")
+ 
     }
     
-    func testEndPointLoadDataFromServer(notification: NSNotification){
-        
-        let keyOfEndPointToBeUpdated = notification.userInfo!.keys.first;
-        
-       
-        
-    }
     
+    
+    
+    // This test mimics the behavior of EndPoint model and LoginViewController with respect
+    // to communication with the server, since they operate with the delegate operation of
+    // NSURLConnection, the method here can be used as a way to test a Server for different
+    // requests, bad credentials, time out, etc.
+    func testLoadDataFromServerModel(){
+        
+        //debug server
+        let urlDebug = NSURL(string: "https://igordonserver.herokuapp.com/igordon/api/v1.0/gordoninfo/chapelcredits?username=iGordon&password=swift");
+        
+        let request = NSMutableURLRequest(URL: urlDebug!);
 
+        let expectation = self.expectationWithDescription("Test with connection at debug server")
+        
+        var responseData: NSData?
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
+            (response: NSURLResponse!, data: NSData!, error: NSError!) in
+            responseData = data
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectationsWithTimeout(8) { err in
+            XCTAssertNotNil(responseData, "Data is nil and the Server got bad credentials or is not answering")
+        }
+        
+        
+        
+        //Testing code based on https://github.com/AliSoftware/OHHTTPStubs/wiki/OHHTTPStubs-and-asynchronous-tests
+        
+    }
+    
+    
+    
+    
     
     
 

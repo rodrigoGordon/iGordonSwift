@@ -39,10 +39,7 @@ public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDel
         responseData.appendData(data);
         
     }
-    public func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
-        return nil;
-    }
-    
+
     public func connectionDidFinishLoading(connection: NSURLConnection) {
         
         
@@ -59,7 +56,7 @@ public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDel
             
             if let id: AnyObject = json["data"] as AnyObject?  {
 
-                // using description to handle any object that will be received from the server from the server
+                // using description to handle any object that will be received from the server
                 value = id.description
                 
                 NSNotificationCenter.defaultCenter().postNotificationName("dataRetrievedFromServer",
@@ -78,7 +75,7 @@ public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDel
     
     // Function called whenever a determined class need the Endpoint newest data from the Server. Parameter:
     // userProfile - Simply the username and password( base64 for Gordon Server - Adam Vig api )
-    // It creates a connection object and lets the delegate manage it
+    // It creates a connection object and lets the NSURLConnectionDelegate manage it
     public func loadDataFromServer(userProfile: Dictionary<String,String?>){
         
       
@@ -99,6 +96,11 @@ public class EndPoint: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDel
         
         
     }
+    
+
+    
+    
+    
     
     
     
